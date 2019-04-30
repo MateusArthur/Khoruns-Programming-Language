@@ -8,6 +8,7 @@ class Escanear {
 			String line = input.nextLine();
 			line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 			char [] letras = line.toCharArray();
+			
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') { 
 				boolean temTipo = false;
