@@ -1,13 +1,13 @@
 class Float extends Variaveis{
-  private int f_Conteudo()
+  private float f_Conteudo;
 
   //Sets.
-  public int setFloat(int f){
+  public void setFloat(int f){
     this.f_Conteudo = f;
   }
 
   //Gets.
-  public void getFloat(){
+  public float getFloat(){
     return this.f_Conteudo;
   }
 
