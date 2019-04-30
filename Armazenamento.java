@@ -1,6 +1,6 @@
 class Armazenamento{
 	private Inteiro inteiros[];
-
+	
 	Armazenamento(){
 		this.inteiros = new Inteiro[20];
 
@@ -16,4 +16,4 @@ class Armazenamento{
 	public Inteiro getInteiro(int p){
 		return this.inteiros[p];
 	}
-}
+}	
