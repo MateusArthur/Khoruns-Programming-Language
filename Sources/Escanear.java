@@ -3,6 +3,7 @@ import java.util.*;
 
 class Escanear {
 	public void lerArq(Scanner input) {
+		int linha = 0;
 		while (input.hasNext()) {
 			String line = input.nextLine(); // Armazenar Linhas
 			line = line.replaceAll("\\s+", ""); // Remover espaços da linha
@@ -10,7 +11,11 @@ class Escanear {
 			
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') { 
-				System.out.println("Testando Print");
+				// pegar o ultimo char e ve se ter ;
+				if(line.charAt(line.length()-1) != ';') {
+					System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
+					break;
+				}
 				boolean temTipo = false;
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
@@ -37,7 +42,7 @@ class Escanear {
 							while(letras[j] != ']') {
 								// verificar se é numero
 								if(Character.isDigit(letras[x]) == true) {
-									System.out.println("[Khronus]: Erro de Syntaxe. [Linha %d]" + 0); // ajeitar
+									System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]");
 									break;
 								}
 								variavel.append(letras[x]);
@@ -47,6 +52,7 @@ class Escanear {
 						// achamos um tipo
 						if(letras[j] == '=' && temTipo == false) {
 							temTipo = true;
+
 							// tem que implementar
 						}
 						variavel.append(letras[j]);
@@ -55,6 +61,7 @@ class Escanear {
 				}
 				System.out.println("%s" + variavel);
 			}
+			linha++;
 		}
 	}
 }

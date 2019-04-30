@@ -13,7 +13,7 @@ class Main{
 			scan.lerArq(input);
 			input.close();
 		} catch (Exception e) {
-			print("Não foi possível abrir o arquivo teste.kh.");
+			print("[Khronus Erro]: Não foi possível abrir o arquivo teste.kh");
 			e.printStackTrace();
 		}
 	}
