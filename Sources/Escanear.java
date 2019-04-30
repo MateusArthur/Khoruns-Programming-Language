@@ -4,13 +4,13 @@ import java.util.*;
 class Escanear {
 	public void lerArq(Scanner input) {
 		while (input.hasNext()) {
-			// Nome para a variavel inteiro
-			String line = input.nextLine();
+			String line = input.nextLine(); // Armazenar Linhas
 			line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 			char [] letras = line.toCharArray();
 			
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') { 
+				System.out.println("Testando Print");
 				boolean temTipo = false;
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
@@ -53,8 +53,8 @@ class Escanear {
 						j++;
 					}
 				}
+				System.out.println("%s" + variavel);
 			}
 		}
-
 	}
 }

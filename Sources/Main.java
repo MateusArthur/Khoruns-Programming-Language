@@ -5,7 +5,6 @@ class Main{
 	public static void print(String texto){
 		System.out.println(texto);
 	}
-
 	public static void main(String[] args){
 		try {
 			File Arquivo = new File("teste.kh");
