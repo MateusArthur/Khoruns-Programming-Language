@@ -6,11 +6,11 @@ class Escanear {
 		int linha = 0;
 		while (input.hasNext()) {
 			String line = input.nextLine(); // Armazenar Linhas
-			line = line.replaceAll("\\s+", ""); // Remover espaços da linha
+			line = line.replaceAll("\\s+",""); // Remover espaços da linha
 			char [] letras = line.toCharArray();
-			
+
 			// Descobrir se é uma nova variavel
-			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') { 
+			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') {
 				// pegar o ultimo char e ve se ter ;
 				if(line.charAt(line.length()-1) != ';') {
 					System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
@@ -20,19 +20,19 @@ class Escanear {
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
 				// Variavel Float
-				if(letras[4] == 'F' && letras[5] == 'l' && letras[6] == 'o' && letras[7] == 'a' && letras[8] == 't' && letras[9] == ':') { 
+				if(letras[4] == 'F' && letras[5] == 'l' && letras[6] == 'o' && letras[7] == 'a' && letras[8] == 't' && letras[9] == ':') {
 					temTipo = true;
 					j = 9;
 				}
 				// booleano
-				if(letras[4] == 'b' && letras[5] == 'o' && letras[6] == 'o' && letras[7] == 'l' && letras[8] == ':') { 
+				if(letras[4] == 'b' && letras[5] == 'o' && letras[6] == 'o' && letras[7] == 'l' && letras[8] == ':') {
 					temTipo = true;
 					j = 8;
 				}
-				// não é definido após = 
+				// não é definido após =
 				if(temTipo == false) {
 					// definir string/vetor
-					while(letras[j] != ';') { 
+					while(letras[j] != ';') {
 						// achamos um vetor
 						if(letras[j] == '[' && temTipo == false) {
 							temTipo = true;
