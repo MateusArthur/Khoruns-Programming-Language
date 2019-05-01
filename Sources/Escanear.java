@@ -19,7 +19,7 @@ class Escanear {
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
 				// Variavel Float
-				if(letras[4] == 'F' && letras[5] == 'l' && letras[6] == 'o' && letras[7] == 'a' && letras[8] == 't' && letras[9] == ':') {
+				if(letras[4] == 'i' && letras[5] == 'n' && letras[6] == 't' && letras[9] == ':') {
 					temTipo = true;
 					j = 9;
 				}
