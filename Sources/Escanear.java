@@ -19,9 +19,18 @@ class Escanear {
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
 				// Variavel Float
-				if(letras[4] == 'i' && letras[5] == 'n' && letras[6] == 't' && letras[9] == ':') {
+				if(letras[4] == 'i' && letras[5] == 'n' && letras[6] == 't' && letras[7] == ':') {
+					String armazenaVar;
+					StringBuilder sb = new StringBuilder();
+					while (letras[j] != '=') {
+						sb.append(letras[j]);
+						j++;
+					}
+					armazenaVar = sb.toString();
+					//***
 					temTipo = true;
 					j = 9;
+					//***
 				}
 				// booleano
 				if(letras[4] == 'b' && letras[5] == 'o' && letras[6] == 'o' && letras[7] == 'l' && letras[8] == ':') {
