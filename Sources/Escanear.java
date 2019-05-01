@@ -5,10 +5,9 @@ class Escanear {
 	public void lerArq(Scanner input) {
 		int linha = 0;
 		while (input.hasNext()) {
-			String line = input.nextLine(); // Armazenar Linhas
-			line = line.replaceAll("\\s+",""); // Remover espaços da linha
-			char [] letras = line.toCharArray();
-
+			String line = input.nextLine();
+	    line = line.replaceAll("\\s+","");
+	    char [] letras = line.toCharArray();
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w') {
 				// pegar o ultimo char e ve se ter ;
