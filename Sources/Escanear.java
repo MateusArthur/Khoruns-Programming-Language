@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 class Escanear {
-	//private Armazenamento arm = new Armazenamento();
+	private Armazenamento arm = new Armazenamento();
 	public void lerArq(Scanner input) {
 		int linha = 0;
 		while (input.hasNext()) {
