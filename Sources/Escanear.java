@@ -41,9 +41,12 @@ class Escanear {
 
 					//***
 					temTipo = true;
-					j = 9;
+					j = 8;
 					//***
+				
+					setInteiro(armazenaVar, i);
 				}
+
 				// booleano
 				if(letras[4] == 'b' && letras[5] == 'o' && letras[6] == 'o' && letras[7] == 'l' && letras[8] == ':') {
 					temTipo = true;

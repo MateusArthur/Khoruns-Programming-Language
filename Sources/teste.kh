@@ -1,3 +1,2 @@
-new teste;
-new xd;
-new seila;
+new teste = 10;
+

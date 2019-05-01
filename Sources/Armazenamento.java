@@ -9,14 +9,14 @@ class Armazenamento{
 		}
 	}
 
-	public void setInteiro(Inteiro i, String n, Int c){
+	public void setInteiro(String n, Int c){
 		Inteiro aux = new Inteiro();
 		aux.criaInteiro(c, n);
 
 		this.inteiros[inteiros.length] = aux;
 	}
 
-	public Inteiro getInteiro(int p){
-		return this.inteiros[p];
+	public Inteiro getInteiro(){
+		return this.inteiros[i];
 	}
 }

@@ -10,9 +10,17 @@ class Main{
 			File Arquivo = new File("teste.kh");
 			Scanner input = new Scanner(Arquivo);
 			Escanear scan = new Escanear();
+			
+			Inteiro teste = new Inteiro();
+			
+			Armazenamento arm = new Armazenamento();
 
 			scan.lerArq(input);
 			input.close();
+
+			teste = arm.getInteiro();
+
+			System.out.println("Nome: " + teste.getNome() + "Conteudo: " + teste.getConteudo());
 
 		} catch (Exception e) {
 			print("[Khronus Erro]: Não foi possível abrir o arquivo teste.kh");
