@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 
 class Escanear {
+	/*
 	public void lerArq(Scanner input) {
 		int linha = 0;
 		while (input.hasNext()) {
@@ -87,4 +88,5 @@ class Escanear {
 			linha++;
 		}
 	}
+	*/
 }

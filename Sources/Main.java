@@ -7,24 +7,23 @@ class Main{
 	}
 	public static void main(String[] args){
 		try {
-			File Arquivo = new File("teste.kh");
-			Scanner input = new Scanner(Arquivo);
-			Escanear scan = new Escanear();
+			File arquivo = new File("teste.kh");
+			Scanner input = new Scanner(arquivo);
+			Teste scan = new Teste();
 			
-			Inteiro teste = new Inteiro();
-			
-			Armazenamento arm = new Armazenamento();
+			Inteiro inteiros = new Inteiro();
 
 			scan.lerArq(input);
+			
+			inteiros = scan.getArmazenamento();
+
+			System.out.println("Nome: " + inteiros.getNome()  + " || " +"Valor: " + inteiros.getConteudo());
+
 			input.close();
-
-			teste = arm.getInteiro();
-
-			System.out.println("Nome: " + teste.getNome() + "Conteudo: " + teste.getConteudo());
-
-		} catch (Exception e) {
+		
+		} catch (Exception erro) {
 			print("[Khronus Erro]: Não foi possível abrir o arquivo teste.kh");
-			e.printStackTrace();
+			erro.printStackTrace();
 		}
 	}
 }
