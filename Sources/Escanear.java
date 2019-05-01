@@ -18,8 +18,9 @@ class Escanear {
 				boolean temTipo = false;
 				int j = 3;
 				StringBuilder variavel =  new StringBuilder();
-				// Variavel Float
+				// PEGAR O "NOME" DA VARIAVEL INT
 				if(letras[4] == 'i' && letras[5] == 'n' && letras[6] == 't' && letras[7] == ':') {
+					j = 3;
 					String armazenaVar;
 					StringBuilder sb = new StringBuilder();
 					while (letras[j] != '=') {
@@ -27,6 +28,17 @@ class Escanear {
 						j++;
 					}
 					armazenaVar = sb.toString();
+
+					//PEGAR VALOR DA VARIAVEL "INT"
+					String armazenaInt;
+					StringBuilder si = new StringBuilder();
+					while (letras[j] != ';') {
+						si.append(letras[j]);
+						j++;
+					}
+					armazenaInt = si.toString();
+					int i = Integer.parseInt(armazenaInt);
+
 					//***
 					temTipo = true;
 					j = 9;
