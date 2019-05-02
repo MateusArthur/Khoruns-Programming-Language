@@ -5,6 +5,7 @@ class Escanear {
 	// Instâncias
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
+	
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -111,7 +112,16 @@ class Escanear {
 			linha++;
 		}
 	}
-	public Inteiro getArmazenamento(){
-		return this.arm.getInteiro();
+	
+	public Inteiro getArmazenamento(String nome){
+		if(this.arm.getInteiro(nome) != null){
+			return this.arm.getInteiro(nome);
+		}
+
+		else{
+			System.out.println("[Khronus]: Variavel " + nome + " não existe.");
+		}
+
+		return null;
 	}
 }

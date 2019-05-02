@@ -1,3 +1,4 @@
+/*
 import java.io.*;
 import java.util.*;
 
@@ -72,3 +73,4 @@ class Teste{
 
 //Fim da classe.
 }
+*/

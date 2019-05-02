@@ -2,6 +2,11 @@
 class Inteiro extends Variaveis{
 	private int i_Conteudo;
 
+	Inteiro(){
+		this.setConteudo(0);
+	}
+
+
 	//Sets.
 	public void setConteudo(int c){
 		this.i_Conteudo = c;
@@ -10,11 +15,5 @@ class Inteiro extends Variaveis{
 	//Gets.
 	public int getConteudo(){
 		return this.i_Conteudo;
-	}
-
-	//Metodos.
-	public void criaInteiro(int c, String n){
-		this.setConteudo(c);
-		this.setNome(n);
 	}
 }

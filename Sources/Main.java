@@ -15,7 +15,7 @@ class Main{
 
 			scan.lerArq(input);
 			
-			inteiros = scan.getArmazenamento();
+			inteiros = scan.getArmazenamento("varia_vel");
 
 			System.out.println("Nome: " + inteiros.getNome()  + " || " +"Valor: " + inteiros.getConteudo());
 
