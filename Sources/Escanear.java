@@ -44,7 +44,7 @@ class Escanear {
 				// definir string/vetor
 				while(letras[j] != ';') {
 					/*
-					Tem que adicionar nos lugares certos
+					Tem que adicionar nos lugares certos s
 					if(!fc.palavraValida(letras[j])) {
 						System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 						break;
