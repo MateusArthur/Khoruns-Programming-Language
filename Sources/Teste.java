@@ -32,9 +32,7 @@ class Teste{
 
 				//Verifica se a variavel é um inteiro.
                 if(letras[3] == 'i' && letras[4] == 'n' && letras[5] == 't' && letras[6] == ':') {
-     				
-     				System.out.println("estou aqui");
-
+     			
                 	//Captura o nome da variavel dada no arquivo .kh.
                     int i = 7;
                     while (letras[i] != '=') {
@@ -56,9 +54,7 @@ class Teste{
                     }
 					
 					//Transforma o vetor de caracters sb em uma string e armazena em conteudoVar.
-                    conteudoVar = sb.toString();
-
-                    System.out.println(conteudoVar);                	
+                    conteudoVar = sb.toString();                	
 
                     //variavel para armazenar o valor inteiro capturado no arquivo .kh.
                 	int conteudo = Integer.parseInt(conteudoVar);
