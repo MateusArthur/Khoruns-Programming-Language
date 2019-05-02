@@ -9,7 +9,7 @@ class Main{
 		try {
 			File arquivo = new File("teste.kh");
 			Scanner input = new Scanner(arquivo);
-			Teste scan = new Teste();
+			Escanear scan = new Escanear();
 			
 			Inteiro inteiros = new Inteiro();
 
