@@ -2,7 +2,10 @@ import java.io.*;
 import java.util.*;
 
 class Escanear {
+	// Instâncias
 	private Armazenamento arm = new Armazenamento();
+	private Funcoes fc = new Funcoes();
+	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
 		while (input.hasNext()) {
@@ -39,7 +42,13 @@ class Escanear {
 					j = 8;
 				}
 				// definir string/vetor
-				while(letras[j] != ';') { 
+				while(letras[j] != ';') {
+					/*
+					Tem que adicionar nos lugares certos
+					if(!fc.palavraValida(letras[j])) {
+						System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+						break;
+					}*/
 					// achamos um vetor ou string
 					if(letras[j] == '[' && temTipo == 0) {
 						temTipo = 4;
@@ -105,5 +114,4 @@ class Escanear {
 	public Inteiro getArmazenamento(){
 		return this.arm.getInteiro();
 	}
-
 }
