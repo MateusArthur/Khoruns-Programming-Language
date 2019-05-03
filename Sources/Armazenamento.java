@@ -1,5 +1,12 @@
 import java.util.*;
+/*
+	Ler antes de fazer a sting;
 
+									var    tamanho da string
+	a string será criada assim: new string[25];
+
+	logo string pode ter tamanho 25, ou ser um vetor de 25 indices vamos utiliza vetor de char para fazer a string
+*/
 class Armazenamento{
 	//Array para armazenar as variaveis tipo inteiro declaradas no arquivo .kh.
 	private List<Inteiro> inteiros = new ArrayList<Inteiro>();
@@ -18,7 +25,7 @@ class Armazenamento{
 	}
 
 	//Cria um float e armazena no armazenamento.
-	public void setFloat(String n, int c){
+	public void setFloat(String n, double c){
 		Float aux = new Float();
 		
 		aux.setNome(n);

@@ -97,17 +97,17 @@ class Escanear {
 					conteudoVar = bufferLinha.toString();  
 				if(temTipo == 1){ // inteiro
 	                int conteudo = Integer.parseInt(conteudoVar);
-                	//Adiciona a variavel ao armazenamento.
                 	arm.setInteiro(nomeVar, conteudo);
 				}
 				else if(temTipo == 2) { // float
-					System.out.println("Achamos um float " + nomeVar + conteudoVar);
+					double conteudo = Double.parseDouble(conteudoVar);
+					arm.setFloat(nomeVar, conteudo);
 				}
 				else if(temTipo == 3) { // bool
 					System.out.println("Achamos um bool " + nomeVar + conteudoVar);
 				}
 				else if(temTipo == 4) { // string/vetor
-					// tamanhoVetor
+					// 
 					System.out.println("Achamos uma string " + conteudoVar);
 				}
 				else if(temTipo == 0) { // tipo indefinido
@@ -125,7 +125,7 @@ class Escanear {
 					int x = 8;
 					while(letras[x] != ')')	{
 						bufferLinha.append(letras[x]);
-						x++
+						x++;
 					}
 					nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 					if(!fc.palavraValida(nomeVar)) {
@@ -171,7 +171,7 @@ class Escanear {
 									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
 									break;
 								}
-								bufferLinha.delete(0, bufferLinha,lenght());
+								bufferLinha.delete(0, bufferLinha.length());
 							}
 							bufferLinha.append(letras[j]);
 							j++;
@@ -180,13 +180,9 @@ class Escanear {
 					else {
 						
 					}
-					while(letras[x] != ')') {
-						bufferLinha.append(letras[x]);
-						x++;
-					}
 				}
 				else {
-					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha "].");
+					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha + "].");
 				}
 			}
 			linha++;
