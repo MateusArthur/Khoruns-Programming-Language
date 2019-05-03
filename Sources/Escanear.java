@@ -44,16 +44,14 @@ class Escanear {
 				}
 				// definir string/vetor
 				while(letras[j] != ';') {
-					/*
-					Tem que adicionar nos lugares certos s
-					if(!fc.palavraValida(letras[j])) {
-						System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-						break;
-					}*/
 					// achamos um vetor ou string
 					if(letras[j] == '[' && temTipo == 0) {
 						temTipo = 4;
 						nomeVar = bufferLinha.toString(); // achemos o nome da variavel
+						if(!fc.palavraValida(nomeVar)) {
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							break;
+						}
 						bufferLinha.delete(0, bufferLinha.length()); // apgar
 						j++;
 						// armazenar tamanho do vetor
@@ -74,6 +72,10 @@ class Escanear {
 							temTipo = 1;
 						}
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+						if(!fc.palavraValida(nomeVar)) {
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							break;
+						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
 					if(letras[j] != '=') // para não adicionar o igual
@@ -82,6 +84,10 @@ class Escanear {
 						if(temTipo == 0) // se não tiver igual e achou ";" definir como inteiro
 							temTipo = 1;
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+						if(!fc.palavraValida(nomeVar)) {
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							break;
+						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
 					j++;
