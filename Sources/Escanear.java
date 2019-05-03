@@ -13,7 +13,6 @@ class Escanear {
 			// Variaveis
 			String nomeVar = "";
 			String line = input.nextLine(); // Armazenar Linhas
-			String tamanhoVetor;
 			char [] letras = line.toCharArray(); // tranformar String em char
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
@@ -175,6 +174,15 @@ class Escanear {
 							}
 							bufferLinha.append(letras[j]);
 							j++;
+						}
+						// Verificar se variavel existe se não apresenta erro, faltar fazer a classe
+						if(nomeVar == "") {
+							nomeVar = bufferLinha.toString();
+							if(!fc.palavraValida(nomeVar)) {
+								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
+								break;
+							}
+							bufferLinha.delete(0, bufferLinha.length());
 						}
 					} // verificar se a variavel ja foi instânciada
 					else {

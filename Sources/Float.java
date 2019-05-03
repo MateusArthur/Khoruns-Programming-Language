@@ -16,6 +16,4 @@ class Float extends Variaveis{
     this.setConteudo(f);
     this.setNome(n);
   }
-
-
 }
