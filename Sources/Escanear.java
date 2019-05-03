@@ -16,6 +16,7 @@ class Escanear {
 			String tamanhoVetor;
 			char [] letras = line.toCharArray(); // tranformar String em char
 			String conteudoVar = "";
+			StringBuilder bufferLinha =  new StringBuilder();
 			// Fim das varaiveis
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') { 
@@ -30,7 +31,6 @@ class Escanear {
 				// Variaveis inteiras
 				int temTipo = 0;
 				int j = 3;
-				StringBuilder bufferLinha =  new StringBuilder();
 				// fim
 				// Variavel Float
 				if(letras[3] == 'F' && letras[4] == 'l' && letras[5] == 'o' && letras[6] == 'a' && letras[7] == 't' && letras[8] == ':') { 
@@ -78,7 +78,7 @@ class Escanear {
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
-					if(letras[j] != '=') // para não adicionar o igual
+					else // para não adicionar o igual
 						bufferLinha.append(letras[j]);
 					if(j == line.length()-2 && nomeVar == "") { // case: não ter igual
 						if(temTipo == 0) // se não tiver igual e achou ";" definir como inteiro
@@ -115,6 +115,80 @@ class Escanear {
 					break;
 				}
 			}
+			else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
+					
+			}
+			else {
+				line = line.replaceAll("\\s+", ""); // Remover espaços da linha
+				letras = line.toCharArray(); // Tranformar novamente agora sem espaços
+				if(letras[0] == 'p' && letras[1] == 'u' && letras[2] == 'b' && letras[3] == 'l' && letras[4] == 'i' && letras[5] == 'c' && letras[6] == '(') {
+					int x = 8;
+					while(letras[x] != ')')	{
+						bufferLinha.append(letras[x]);
+						x++
+					}
+					nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+					if(!fc.palavraValida(nomeVar)) {
+						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
+						break;
+					}
+					bufferLinha.delete(0, bufferLinha.length());
+					//Fim primeira parte da public, adicionar a linha da public para saber a posição que começa e termina
+				}
+				else if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
+					int x = 3;
+					while(letras[x] != ')') {
+						bufferLinha.append(letras[x]);
+						x++;
+					}
+					nomeVar = bufferLinha.toString();
+					if(!fc.palavraValida(nomeVar)) {
+						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
+						break;
+					}
+					bufferLinha.delete(0, bufferLinha.length());
+				}
+				else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's' &&  letras[3] == 'e'  &&  letras[4] == ' '  &&  letras[5] == 'i'  &&  letras[6] == 'f'  &&  letras[7] == '(') {
+					int x = 8;
+					while(letras[x] != ')') {
+						bufferLinha.append(letras[x]);
+						x++;
+					}
+					nomeVar = bufferLinha.toString();
+					if(!fc.palavraValida(nomeVar)) {
+						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
+						break;
+					}
+					bufferLinha.delete(0, bufferLinha.length());			
+				}
+				else if(letras[0] == 'f' && letras[1] == 'o' && letras[2] == 'r' && letras[4] == '(') {
+					if(letras[5] == 'n' && letras[6] == 'e' && letras[7] == 'w') {
+						int j = 8;
+						while(letras[j] != ';') {
+							if(letras[j] == '=') {
+								nomeVar = bufferLinha.toString();
+								if(!fc.palavraValida(nomeVar)) {
+									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
+									break;
+								}
+								bufferLinha.delete(0, bufferLinha,lenght());
+							}
+							bufferLinha.append(letras[j]);
+							j++;
+						}
+					} // verificar se a variavel ja foi instânciada
+					else {
+						
+					}
+					while(letras[x] != ')') {
+						bufferLinha.append(letras[x]);
+						x++;
+					}
+				}
+				else {
+					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha "].");
+				}
+			}
 			linha++;
 		}
 	}
@@ -123,11 +197,9 @@ class Escanear {
 		if(this.arm.getInteiro(nome) != null){
 			return this.arm.getInteiro(nome);
 		}
-
 		else{
-			System.out.println("[Khronus]: Variavel " + nome + " não existe.");
+			System.out.println("[Khronus]: Erro, a Variavel " + nome + ", não existe.");
 		}
-
 		return null;
 	}
 }
