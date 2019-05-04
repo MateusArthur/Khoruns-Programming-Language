@@ -190,7 +190,6 @@ class Escanear {
 						
 					}
 				}
-<<<<<<< HEAD
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
 					// Verificar se é um texto ou var
 					// print funcionara da seguinte maneira: print("Inteiro: %d or %i, Float: %f, String: %s", int, float, string);
@@ -218,8 +217,6 @@ class Escanear {
 
 					}
 				}
-=======
->>>>>>> 5aab7c21010c08da3b3bebdf4f105acede859d22
 				else {
 					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha + "].");
 				}
