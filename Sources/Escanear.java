@@ -200,8 +200,7 @@ class Escanear {
 					// Verificar se é um texto ou var
 					// print funcionara da seguinte maneira: print("Inteiro: %d or %i, Float: %f, String: %s", int, float, string);
 					if(letras[6] == '"') {
-						int j;
-						whiles
+						int j = 7;
 						while(letras[j] != '"') {
 							if(letras[j] == '%' && letras[j+1] == 'd' || letras[j] == '%' && letras[j+1] == 'i') {
 								bufferLinha.append("s");
