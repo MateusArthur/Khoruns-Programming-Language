@@ -5,11 +5,12 @@ class Main{
 	public static void print(String texto){
 		System.out.println(texto);
 	}
+
 	public static void main(String[] args){
-		try {
+		try {	
 			File arquivo = new File("teste.kh");
 			Scanner input = new Scanner(arquivo);
-			Teste scan = new Teste();
+			Escanear scan = new Escanear();
 
 			
 			Inteiro inteiros = new Inteiro();
@@ -17,9 +18,7 @@ class Main{
 			scan.lerArq(input);
 			
 
-			
 			inteiros = scan.getArmazenamento("variavel");
-
 
 
 			System.out.println("Nome: " + inteiros.getNome()  + " || " +"Valor: " + inteiros.getConteudo());
