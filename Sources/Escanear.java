@@ -5,6 +5,8 @@ class Escanear {
 	// Instâncias
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
+	private Atribuir atribuir = new Atribuir();
+	
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -13,7 +15,6 @@ class Escanear {
 			String nomeVar = "";
 			String line = input.nextLine(); // Armazenar Linhas
 			char [] letras = line.toCharArray(); // tranformar String em char
-			char [] letrasComEspaco = line.toCharArray();
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
 			// Fim das varaiveis
@@ -48,7 +49,7 @@ class Escanear {
 						temTipo = 4;
 						nomeVar = bufferLinha.toString(); // achemos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome 1da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 							break;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apgar
@@ -72,7 +73,7 @@ class Escanear {
 						}
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome 2da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 							break;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
@@ -84,33 +85,26 @@ class Escanear {
 							temTipo = 1;
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome 3da variavel inválido. [Linha " + linha + "]"); // ajeitar
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 							break;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
 					j++;
 				}
-				if(bufferLinha.toString().length() > 0) // Se tiver lido um valor;
-					conteudoVar = bufferLinha.toString();
 				// bufferLinha contém o valor da variavel
+				if(conteudoVar == "")
+					conteudoVar = bufferLinha.toString();  
 				if(temTipo == 1){ // inteiro
-					if(conteudoVar == "")
-						conteudoVar = "0";
 	                int conteudo = Integer.parseInt(conteudoVar);
                 	arm.setInteiro(nomeVar, conteudo);
 				}
 				else if(temTipo == 2) { // float
-					if(conteudoVar == "")
-						conteudoVar = "0";
 					double conteudo = Double.parseDouble(conteudoVar);
 					arm.setFloat(nomeVar, conteudo);
 				}
 				else if(temTipo == 3) { // bool
-					if(conteudoVar == "")
-						conteudoVar = "0";
-					boolean conteudo = Boolean.parseBoolean(conteudoVar);
-                	//arm.setInteiro(nomeVar, conteudo);
+					System.out.println("Achamos um bool " + nomeVar + conteudoVar);
 				}
 				else if(temTipo == 4) { // string/vetor
 					// 
@@ -182,7 +176,7 @@ class Escanear {
 							bufferLinha.append(letras[j]);
 							j++;
 						}
-						// Verificar se variavel existe se não apresenta erro, falta fazer a classe
+						// Verificar se variavel existe se não apresenta erro, faltar fazer a classe
 						if(nomeVar == "") {
 							nomeVar = bufferLinha.toString();
 							if(!fc.palavraValida(nomeVar)) {
@@ -196,6 +190,7 @@ class Escanear {
 						
 					}
 				}
+<<<<<<< HEAD
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
 					// Verificar se é um texto ou var
 					// print funcionara da seguinte maneira: print("Inteiro: %d or %i, Float: %f, String: %s", int, float, string);
@@ -223,11 +218,14 @@ class Escanear {
 
 					}
 				}
+=======
+>>>>>>> 5aab7c21010c08da3b3bebdf4f105acede859d22
 				else {
 					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha + "].");
 				}
 			}
 			linha++;
+		
 		}
 	}
 	

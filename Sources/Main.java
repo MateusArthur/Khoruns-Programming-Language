@@ -15,7 +15,7 @@ class Main{
 
 			scan.lerArq(input); // Compilar
 			
-			print("Insira o nome da variavel que deseja procurar:");
+			System.out.print("Insira o nome da variavel que deseja procurar: ");
 			Scanner variavel = new Scanner(System.in);
 			String buscar = variavel.nextLine();
 			inteiros = scan.getArmazenamento(buscar);

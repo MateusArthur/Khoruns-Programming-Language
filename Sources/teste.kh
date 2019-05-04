@@ -1,2 +1,3 @@
 new variavel = 1;
-print("Teste %d");
+new x = 2;
+new y = 3;
