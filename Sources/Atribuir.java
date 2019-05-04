@@ -1,5 +1,5 @@
 class Atribuir{
-	public void atribuir(Inteiro a, Inteiro b){
+	public void atribuir(Inteiro a, int b){
 		a.setConteudo(b);
 	}
 }

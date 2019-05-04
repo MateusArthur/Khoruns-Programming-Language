@@ -1,1 +1,2 @@
-new int: variavel = 10;
+new variavel = 1;
+print("Teste %d");

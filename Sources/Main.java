@@ -11,14 +11,14 @@ class Main{
 			File arquivo = new File("teste.kh");
 			Scanner input = new Scanner(arquivo);
 			Escanear scan = new Escanear();
-
-			
 			Inteiro inteiros = new Inteiro();
 
-			scan.lerArq(input);
+			scan.lerArq(input); // Compilar
 			
-
-			inteiros = scan.getArmazenamento("variavel");
+			print("Insira o nome da variavel que deseja procurar:");
+			Scanner variavel = new Scanner(System.in);
+			String buscar = variavel.nextLine();
+			inteiros = scan.getArmazenamento(buscar);
 
 
 			System.out.println("Nome: " + inteiros.getNome()  + " || " +"Valor: " + inteiros.getConteudo());
