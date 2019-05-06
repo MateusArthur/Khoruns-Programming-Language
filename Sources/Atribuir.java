@@ -10,13 +10,19 @@ class Atribuir{
 		a.setConteudo(b.getConteudo() + a.getConteudo());
 	}
 
-	//Metodo para uso de var++ ou var--.
+	//Metodo para uso de var++
 	public void incrementaVar(Inteiro a){
-			a.setConteudo(a.getConteudo() + 1);
-	}
-	public void decrementaVar(Inteiro a){
-			a.setConteudo(a.getConteudo() - 1);
+		a.setConteudo(a.getConteudo() + 1);
 	}
 
+	//Metodo para uso de var--
+	public void decrementaVar(Inteiro a){
+		a.setConteudo(a.getConteudo() - 1);
+	}
+
+	//Para somar ou diminuir
+	public void addVar(Inteiro a, int val) {
+		a.setConteudo(a.getConteudo() + val);
+	}
 }
 

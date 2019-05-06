@@ -6,7 +6,6 @@ class Inteiro extends Variaveis{
 		this.setConteudo(0);
 	}
 
-
 	//Sets.
 	public void setConteudo(int c){
 		this.i_Conteudo = c;

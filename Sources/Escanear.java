@@ -105,11 +105,11 @@ class Escanear {
 					arm.setFloat(nomeVar, conteudo);
 				}
 				else if(temTipo == 3) { // bool
-					System.out.println("Achamos um bool " + nomeVar + conteudoVar);
+					boolean conteudo = Boolean.parseBoolean(conteudoVar);
+					arm.setBool(nomeVar, conteudo);
 				}
 				else if(temTipo == 4) { // string/vetor
-					//
-					System.out.println("Achamos uma string " + conteudoVar);
+					arm.setString(nomeVar, conteudoVar);
 				}
 				else if(temTipo == 0) { // tipo indefinido
 					System.out.println("[Khronus]: Variavel sem atribuição de valor. [Linha " + linha + "]");
@@ -415,14 +415,14 @@ class Escanear {
 								}
 							}
 							else if(letras[x+1] == ')') {
-								System.out.println("cheo");
+
 								if(operador == 1) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
 											break;
 									}
 									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
-										System.out.println("che2o");
+
 									}
 								}
 								else if(operador == 2) {
@@ -521,7 +521,40 @@ class Escanear {
 						}
 					} // verificar se a variavel ja foi instânciada
 					else {
-
+						while(letras[j] != ';') {
+							bufferLinha.append(letras[j]);
+							j++;
+						}
+						j++;
+						nomeVar = bufferLinha.toString();
+						if(getArmazenamento(nomeVar) == null) {
+							break;
+						}
+						int conteudo = getArmazenamentoCont(nomeVar);
+						bufferLinha.delete(0, bufferLinha.length());
+						int op = 0;
+						String nomeVar2;
+						while(letras[j] != ';') {
+							if(letras[j] == '>') {
+								op = 1;
+								break;
+							}
+							else if(letras[j] == '<') {
+								op = 2;
+								break;
+							}
+							else if(letras[j] == '!' && letras[j+] == '=') {
+								op = 3;
+								j++;
+								break;
+							}
+							else {
+								System.out.println("[Khronus]: Operador inválido. [Linha " + linha + "]");
+								break;
+							}
+							bufferLinha.append(letras[j]);
+							j++;
+						}
 					}
 				}
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
@@ -560,7 +593,6 @@ class Escanear {
 					while(1 > 0){
 						if(letras[j] == '=') {
 							op = 1;
-							j++;
 							break;
 						}
 						else if(letras[j] == '+' && letras[j+1] == '+') {
@@ -590,13 +622,11 @@ class Escanear {
 					pegarInteiro = getArmazenamento(nomeVar);
 					bufferLinha.delete(0, bufferLinha.length());
 					j++;
-					if(op != 1 && op != 2){
-						while(letras[j] != ';') {
-							bufferLinha.append(letras[j]);
-							j++;
-						}
-						conteudoVar = bufferLinha.toString();
+					while(letras[j] != ';') {
+						bufferLinha.append(letras[j]);
+						j++;
 					}
+					conteudoVar = bufferLinha.toString();
 					if(op == 1) {
 						int conteudo = Integer.parseInt(conteudoVar);
 	                	atribuir.atribuiVarInt(pegarInteiro, conteudo);
@@ -606,6 +636,10 @@ class Escanear {
 					}
 					else if(op == 3) {
 						atribuir.decrementaVar(pegarInteiro);
+					}
+					else if(op == 4 || op == 5) {
+						int conteudo = Integer.parseInt(conteudoVar);
+						atribuir.addVar(pegarInteiro, conteudo);
 					}
 				}
 			}

@@ -14,6 +14,12 @@ class Armazenamento{
 	//Array para armazenar as variaveis tipo float declaradas no arquivo .kh.
 	private List<Float> floats = new ArrayList<Float>();
 
+	//Array para armazenar as variaveis tipo bool declaradas no arquivo .kh.
+	private List<Boleano> bools = new ArrayList<Boleano>();
+
+	//Array para armazenar as variaveis tipo string declaradas no arquivo .kh.
+	private List<myString> strings = new ArrayList<myString>();
+
 	//Cria um inteiro e armazena no armazenamento.
 	public void setInteiro(String n, int c){
 		Inteiro aux = new Inteiro();
@@ -32,6 +38,26 @@ class Armazenamento{
 		aux.setConteudo(c);
 
 		floats.add(aux);
+	}
+
+	//Cria um boolean e armazena no armazenamento
+	public void setBool(String n, boolean c) {
+		Boleano aux = new Boleano();
+
+		aux.setNome(n);
+		aux.setConteudo(c);
+
+		bools.add(aux);
+	}
+
+	//Cria uma string e armazena no armazenamento
+	public void setString(String n, String c) {
+		myString aux = new myString();
+
+		aux.setNome(n);
+		aux.setConteudo(c);
+
+		strings.add(aux);
 	}
 
 	//Busca a variravel informada no parametro no armazenamento.
@@ -57,6 +83,30 @@ class Armazenamento{
 		}		
 			
 		return null;
+	}
+
+	//Busca a variravel informada no parametro no armazenamento.
+	public Boleano getBool(String n){
+		for(int i = 0; i < this.bools.size(); i++){
+			
+			if(this.bools.get(i).getNome().equals(n)){
+				return this.bools.get(i);		
+			}
+		}		
+
+		return null;
 	}	
+
+	//Busca a variravel informada no parametro no armazenamento.
+	public myString getString(String n){
+		for(int i = 0; i < this.strings.size(); i++){
+			
+			if(this.strings.get(i).getNome().equals(n)){
+				return this.strings.get(i);		
+			}
+		}		
+			
+		return null;
+	}
 
 }
