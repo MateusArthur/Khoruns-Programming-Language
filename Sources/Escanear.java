@@ -6,7 +6,7 @@ class Escanear {
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
 	private Atribuir atribuir = new Atribuir();
-	
+
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -18,8 +18,34 @@ class Escanear {
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
 			// Fim das varaiveis
+
+			//começo atribuir variavel ex: variavel = 10;
+			int s = 0;
+			while (letras[s] != '=') {
+				bufferLinha.append(letras[s]);
+				s++;
+			}
+
+			Inteiro pegarInteiro = new Inteiro();
+			nomeVar = bufferLinha.toString();
+			pegarInteiro = getArmazenamento(nomeVar);
+			bufferLinha.delete(0, bufferLinha.length());
+
+			if (getArmazenamento(nomeVar) != null) {
+				while (letras[s] != ';') {
+					bufferLinha.append(letras[s]);
+					s++;
+				}
+				conteudoVar = bufferLinha.toString();
+				int tes;
+				tes = Integer.parseInt(conteudoVar);
+				atribuir.atribuiVarInt(pegarInteiro,tes);
+			}
+			bufferLinha.delete(0, bufferLinha.length());
+			//fim
+
 			// Descobrir se é uma nova variavel
-			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') { 
+			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') {
 				// Zerar as variaveis após a verificação do espaço
 				line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 				letras = line.toCharArray(); // Tranformar novamente agora sem espaços
@@ -28,20 +54,22 @@ class Escanear {
 					System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
 					break;
 				}
+
 				// Variaveis inteiras
 				int temTipo = 0;
 				int j = 3;
 				// fim
 				// Variavel Float
-				if(letras[3] == 'F' && letras[4] == 'l' && letras[5] == 'o' && letras[6] == 'a' && letras[7] == 't' && letras[8] == ':') { 
+				if(letras[3] == 'F' && letras[4] == 'l' && letras[5] == 'o' && letras[6] == 'a' && letras[7] == 't' && letras[8] == ':') {
 					temTipo = 2;
 					j = 9;
 				}
 				// booleano
-				if(letras[3] == 'b' && letras[4] == 'o' && letras[5] == 'o' && letras[6] == 'l' && letras[7] == ':') { 
+				if(letras[3] == 'b' && letras[4] == 'o' && letras[5] == 'o' && letras[6] == 'l' && letras[7] == ':') {
 					temTipo = 3;
 					j = 8;
 				}
+
 				// definir string/vetor
 				while(letras[j] != ';') {
 					// achamos um vetor ou string
@@ -94,7 +122,7 @@ class Escanear {
 				}
 				// bufferLinha contém o valor da variavel
 				if(conteudoVar == "")
-					conteudoVar = bufferLinha.toString();  
+					conteudoVar = bufferLinha.toString();
 				if(temTipo == 1){ // inteiro
 	                int conteudo = Integer.parseInt(conteudoVar);
                 	arm.setInteiro(nomeVar, conteudo);
@@ -107,7 +135,7 @@ class Escanear {
 					System.out.println("Achamos um bool " + nomeVar + conteudoVar);
 				}
 				else if(temTipo == 4) { // string/vetor
-					// 
+					//
 					System.out.println("Achamos uma string " + conteudoVar);
 				}
 				else if(temTipo == 0) { // tipo indefinido
@@ -116,7 +144,7 @@ class Escanear {
 				}
 			}
 			else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
-					
+
 			}
 			else {
 				line = line.replaceAll("\\s+", ""); // Remover espaços da linha
@@ -159,7 +187,7 @@ class Escanear {
 						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
 						break;
 					}
-					bufferLinha.delete(0, bufferLinha.length());			
+					bufferLinha.delete(0, bufferLinha.length());
 				}
 				else if(letras[0] == 'f' && letras[1] == 'o' && letras[2] == 'r' && letras[4] == '(') {
 					if(letras[5] == 'n' && letras[6] == 'e' && letras[7] == 'w') {
@@ -187,7 +215,7 @@ class Escanear {
 						}
 					} // verificar se a variavel ja foi instânciada
 					else {
-						
+
 					}
 				}
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
@@ -222,10 +250,10 @@ class Escanear {
 				}
 			}
 			linha++;
-		
+
 		}
 	}
-	
+
 	public Inteiro getArmazenamento(String nome){
 		if(this.arm.getInteiro(nome) != null){
 			return this.arm.getInteiro(nome);
