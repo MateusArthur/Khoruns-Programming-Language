@@ -1,3 +1,5 @@
 new variavel = 1;
+new y = 1;
 new x = 2;
-new y = 3;
+y++;
+if(x == y)

@@ -39,16 +39,13 @@ class Armazenamento{
 		
 
 		for(int i = 0; i < this.inteiros.size(); i++){
-			
-			System.out.println(this.inteiros.get(i).getNome());
 
 			if(this.inteiros.get(i).getNome().equals(n)){
 				return this.inteiros.get(i);		
 			}
 		}		
-			
 		return null;
-	}	
+	}
 
 	//Busca a variravel informada no parametro no armazenamento.
 	public Float getFloat(String n){

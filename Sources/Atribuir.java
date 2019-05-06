@@ -2,7 +2,7 @@ class Atribuir{
 
 	//Metodo para atribuir um valor inteiro a uma variavel.
 	public void atribuiVarInt(Inteiro a, int b){
-		a.setConteudo(b + a.getConteudo());
+		a.setConteudo(b);
 	}
 
 	//Metodo para atribuir o valor de uma variavel a outra.
@@ -11,14 +11,11 @@ class Atribuir{
 	}
 
 	//Metodo para uso de var++ ou var--.
-	public void incrementa(Inteiro a, int b){
-		if(b == 1){
+	public void incrementaVar(Inteiro a){
 			a.setConteudo(a.getConteudo() + 1);
-		}
-
-		else{
-			a.setConteudo(a.getConteudo() - 1);	
-		}
+	}
+	public void decrementaVar(Inteiro a){
+			a.setConteudo(a.getConteudo() - 1);
 	}
 
 }

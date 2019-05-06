@@ -6,7 +6,6 @@ class Escanear {
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
 	private Atribuir atribuir = new Atribuir();
-
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -18,32 +17,6 @@ class Escanear {
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
 			// Fim das varaiveis
-
-			//começo atribuir variavel ex: variavel = 10;
-			int s = 0;
-			while (letras[s] != '=') {
-				bufferLinha.append(letras[s]);
-				s++;
-			}
-
-			Inteiro pegarInteiro = new Inteiro();
-			nomeVar = bufferLinha.toString();
-			pegarInteiro = getArmazenamento(nomeVar);
-			bufferLinha.delete(0, bufferLinha.length());
-
-			if (getArmazenamento(nomeVar) != null) {
-				while (letras[s] != ';') {
-					bufferLinha.append(letras[s]);
-					s++;
-				}
-				conteudoVar = bufferLinha.toString();
-				int tes;
-				tes = Integer.parseInt(conteudoVar);
-				atribuir.atribuiVarInt(pegarInteiro,tes);
-			}
-			bufferLinha.delete(0, bufferLinha.length());
-			//fim
-
 			// Descobrir se é uma nova variavel
 			if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') {
 				// Zerar as variaveis após a verificação do espaço
@@ -65,7 +38,7 @@ class Escanear {
 					j = 9;
 				}
 				// booleano
-				if(letras[3] == 'b' && letras[4] == 'o' && letras[5] == 'o' && letras[6] == 'l' && letras[7] == ':') {
+				else if(letras[3] == 'b' && letras[4] == 'o' && letras[5] == 'o' && letras[6] == 'l' && letras[7] == ':') {
 					temTipo = 3;
 					j = 8;
 				}
@@ -102,7 +75,7 @@ class Escanear {
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
 							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-							break;
+							return;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
@@ -165,9 +138,342 @@ class Escanear {
 				}
 				else if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 					int x = 3;
+					String nomeVar2 = "";
+					int operador = 0;
+					int vetorDeCondi[] = new int[10];
+					vetorDeCondi = fc.iniciarVetor(vetorDeCondi);
 					while(letras[x] != ')') {
-						bufferLinha.append(letras[x]);
-						x++;
+						if(nomeVar == "") {
+							if(letras[x] == '=' && letras[x+1] == '=') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 1;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							else if(letras[x] == '!' && letras[x+1] == '=') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 2;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							else if(letras[x] == '>' && letras[x+1] == '=') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 3;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							else if(letras[x] == '<' && letras[x+1] == '=') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 4;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							else if(letras[x] == '>') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 5;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							else if(letras[x] == '<') {
+								nomeVar = bufferLinha.toString();
+								if(getArmazenamento(nomeVar) == null) {
+									break;
+								}
+								operador = 6;
+								bufferLinha.delete(0, bufferLinha.length());
+								x+=2;
+							}
+							bufferLinha.append(letras[x]);
+							x++;
+						}
+						else {
+							if(letras[x] == '&' && letras[x+1] == '&') {
+								if(operador == 1) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								else if(operador == 2) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								else if(operador == 3) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								else if(operador == 4) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								else if(operador == 5) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								else if(operador == 6) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+										break;
+									}
+									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 1; // condicao aceita
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+											break;
+										}
+									}
+									else {
+										int pos = fc.posicaoLivre(vetorDeCondi);
+										if(pos != -1) {
+											vetorDeCondi[pos] = 0; // condicao negada
+										}
+										else {
+											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
+										}
+									}
+								}
+								bufferLinha.delete(0, bufferLinha.length());
+								x++;
+							}
+							else if(letras[x] == '|' && letras[x+1] == '|') {
+								if(fc.vetorIniciado(vetorDeCondi))
+									fc.limparVetor(vetorDeCondi);
+								if(operador == 1) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								else if(operador == 2) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 3) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 4) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 5) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 6) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+							}
+							else if(letras[x+1] == ')') {
+								System.out.println("cheo");
+								if(operador == 1) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
+										System.out.println("che2o");
+									}
+								}
+								else if(operador == 2) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 3) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 4) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 5) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+								if(operador == 6) {
+									nomeVar2 = bufferLinha.toString();
+									if(getArmazenamento(nomeVar2) == null) {
+											break;
+									}
+									if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
+
+									}
+								}
+							}
+							bufferLinha.append(letras[x]);
+							x++;
+						}
 					}
 					nomeVar = bufferLinha.toString();
 					if(!fc.palavraValida(nomeVar)) {
@@ -246,7 +552,61 @@ class Escanear {
 					}
 				}
 				else {
-					System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha + "].");
+					Inteiro pegarInteiro = new Inteiro();
+					//Atribuicao de valores
+					int j = 0;
+					int op = 0;
+					bufferLinha.delete(0, bufferLinha.length());
+					while(1 > 0){
+						if(letras[j] == '=') {
+							op = 1;
+							j++;
+							break;
+						}
+						else if(letras[j] == '+' && letras[j+1] == '+') {
+							op = 2;
+							j++;
+							break;
+						}
+						else if(letras[j] == '-' && letras[j+1] == '-') {
+							op = 2;
+							j++;
+							break;
+						}
+						else if(letras[j] == '+' && letras[j+1] == '=') {
+							op = 2;
+							j++;
+							break;
+						}
+						else if(letras[j] == '-' && letras[j+1] == '=') {
+							op = 2;
+							j++;
+							break;
+						}
+						bufferLinha.append(letras[j]);
+						j++;
+					}
+					nomeVar = bufferLinha.toString();
+					pegarInteiro = getArmazenamento(nomeVar);
+					bufferLinha.delete(0, bufferLinha.length());
+					j++;
+					if(op != 1 && op != 2){
+						while(letras[j] != ';') {
+							bufferLinha.append(letras[j]);
+							j++;
+						}
+						conteudoVar = bufferLinha.toString();
+					}
+					if(op == 1) {
+						int conteudo = Integer.parseInt(conteudoVar);
+	                	atribuir.atribuiVarInt(pegarInteiro, conteudo);
+					}
+					else if(op == 2) {
+						atribuir.incrementaVar(pegarInteiro);
+					}
+					else if(op == 3) {
+						atribuir.decrementaVar(pegarInteiro);
+					}
 				}
 			}
 			linha++;
@@ -262,5 +622,18 @@ class Escanear {
 			System.out.println("[Khronus]: Erro, a Variavel " + nome + ", não existe.");
 		}
 		return null;
+	}
+
+	public int getArmazenamentoCont(String nome){
+		if(this.arm.getInteiro(nome) != null){
+			Inteiro aux = new Inteiro();
+			aux = this.arm.getInteiro(nome);
+			int a = aux.getConteudo();
+			return a;
+		}
+		else{
+			System.out.println("[Khronus]: Erro, a Variavel " + nome + ", não existe.");
+		}
+		return 0;
 	}
 }
