@@ -9,6 +9,7 @@ class Escanear {
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
+		outerloop:
 		while (input.hasNext()) {
 			// Variaveis
 			String nomeVar = "";
@@ -25,7 +26,7 @@ class Escanear {
 				// pegar o ultimo char e ve se ter ;
 				if(line.charAt(line.length()-1) != ';') {
 					System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
-					break;
+					break outerloop;
 				}
 
 				// Variaveis inteiras
@@ -51,7 +52,7 @@ class Escanear {
 						nomeVar = bufferLinha.toString(); // achemos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
 							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-							break;
+							break outerloop;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apgar
 						j++;
@@ -60,7 +61,7 @@ class Escanear {
 							// verificar se é numero
 							if(Character.isDigit(letras[j]) == false) {
 								System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]");
-								break;
+								break outerloop;
 							}
 							bufferLinha.append(letras[j]);
 							j++;
@@ -87,7 +88,7 @@ class Escanear {
 						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 						if(!fc.palavraValida(nomeVar)) {
 							System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-							break;
+							break outerloop;
 						}
 						bufferLinha.delete(0, bufferLinha.length()); // apagar
 					}
@@ -113,7 +114,7 @@ class Escanear {
 				}
 				else if(temTipo == 0) { // tipo indefinido
 					System.out.println("[Khronus]: Variavel sem atribuição de valor. [Linha " + linha + "]");
-					break;
+					break outerloop;
 				}
 			}
 			else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
@@ -131,7 +132,7 @@ class Escanear {
 					nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 					if(!fc.palavraValida(nomeVar)) {
 						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
-						break;
+						break outerloop;
 					}
 					bufferLinha.delete(0, bufferLinha.length());
 					//Fim primeira parte da public, adicionar a linha da public para saber a posição que começa e termina
@@ -147,7 +148,7 @@ class Escanear {
 							if(letras[x] == '=' && letras[x+1] == '=') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 1;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -156,7 +157,7 @@ class Escanear {
 							else if(letras[x] == '!' && letras[x+1] == '=') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 2;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -165,7 +166,7 @@ class Escanear {
 							else if(letras[x] == '>' && letras[x+1] == '=') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 3;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -174,7 +175,7 @@ class Escanear {
 							else if(letras[x] == '<' && letras[x+1] == '=') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 4;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -183,7 +184,7 @@ class Escanear {
 							else if(letras[x] == '>') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 5;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -192,7 +193,7 @@ class Escanear {
 							else if(letras[x] == '<') {
 								nomeVar = bufferLinha.toString();
 								if(getArmazenamento(nomeVar) == null) {
-									break;
+									break outerloop;
 								}
 								operador = 6;
 								bufferLinha.delete(0, bufferLinha.length());
@@ -206,7 +207,7 @@ class Escanear {
 								if(operador == 1) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -215,7 +216,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -231,7 +232,7 @@ class Escanear {
 								else if(operador == 2) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -240,7 +241,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -256,7 +257,7 @@ class Escanear {
 								else if(operador == 3) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -265,7 +266,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -281,7 +282,7 @@ class Escanear {
 								else if(operador == 4) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -290,7 +291,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -306,7 +307,7 @@ class Escanear {
 								else if(operador == 5) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -315,7 +316,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -331,7 +332,7 @@ class Escanear {
 								else if(operador == 6) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-										break;
+										break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
 										int pos = fc.posicaoLivre(vetorDeCondi);
@@ -340,7 +341,7 @@ class Escanear {
 										}
 										else {
 											System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											break;
+											break outerloop;
 										}
 									}
 									else {
@@ -362,7 +363,7 @@ class Escanear {
 								if(operador == 1) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
 
@@ -371,7 +372,7 @@ class Escanear {
 								else if(operador == 2) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
 
@@ -380,7 +381,7 @@ class Escanear {
 								if(operador == 3) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
 
@@ -389,7 +390,7 @@ class Escanear {
 								if(operador == 4) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
 
@@ -398,7 +399,7 @@ class Escanear {
 								if(operador == 5) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
 
@@ -407,7 +408,7 @@ class Escanear {
 								if(operador == 6) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
 
@@ -419,7 +420,7 @@ class Escanear {
 								if(operador == 1) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
 
@@ -428,7 +429,7 @@ class Escanear {
 								else if(operador == 2) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
 
@@ -437,7 +438,7 @@ class Escanear {
 								if(operador == 3) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
 
@@ -446,7 +447,7 @@ class Escanear {
 								if(operador == 4) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
 
@@ -455,7 +456,7 @@ class Escanear {
 								if(operador == 5) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
 
@@ -464,7 +465,7 @@ class Escanear {
 								if(operador == 6) {
 									nomeVar2 = bufferLinha.toString();
 									if(getArmazenamento(nomeVar2) == null) {
-											break;
+											break outerloop;
 									}
 									if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
 
@@ -478,7 +479,7 @@ class Escanear {
 					nomeVar = bufferLinha.toString();
 					if(!fc.palavraValida(nomeVar)) {
 						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
-						break;
+						break outerloop;
 					}
 					bufferLinha.delete(0, bufferLinha.length());
 				}
@@ -491,19 +492,19 @@ class Escanear {
 					nomeVar = bufferLinha.toString();
 					if(!fc.palavraValida(nomeVar)) {
 						System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
-						break;
+						break outerloop;
 					}
 					bufferLinha.delete(0, bufferLinha.length());
 				}
-				else if(letras[0] == 'f' && letras[1] == 'o' && letras[2] == 'r' && letras[4] == '(') {
-					if(letras[5] == 'n' && letras[6] == 'e' && letras[7] == 'w') {
-						int j = 8;
+				else if(letras[0] == 'f' && letras[1] == 'o' && letras[2] == 'r' && letras[3] == '(') {
+					if(letras[4] == 'n' && letras[5] == 'e' && letras[6] == 'w') {
+						int j = 7;
 						while(letras[j] != ';') {
 							if(letras[j] == '=') {
 								nomeVar = bufferLinha.toString();
 								if(!fc.palavraValida(nomeVar)) {
 									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
-									break;
+									break outerloop;
 								}
 								bufferLinha.delete(0, bufferLinha.length());
 							}
@@ -515,46 +516,123 @@ class Escanear {
 							nomeVar = bufferLinha.toString();
 							if(!fc.palavraValida(nomeVar)) {
 								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
-								break;
+								break outerloop;
 							}
 							bufferLinha.delete(0, bufferLinha.length());
 						}
 					} // verificar se a variavel ja foi instânciada
 					else {
+						int j = 4;
 						while(letras[j] != ';') {
+							System.out.println(letras[j]);
 							bufferLinha.append(letras[j]);
 							j++;
 						}
 						j++;
 						nomeVar = bufferLinha.toString();
 						if(getArmazenamento(nomeVar) == null) {
-							break;
+							break outerloop;
 						}
 						int conteudo = getArmazenamentoCont(nomeVar);
 						bufferLinha.delete(0, bufferLinha.length());
 						int op = 0;
-						String nomeVar2;
+						String nomeVar2 = "";
 						while(letras[j] != ';') {
 							if(letras[j] == '>') {
 								op = 1;
-								break;
+								nomeVar2 = bufferLinha.toString();
+								if(nomeVar2.substring(0, nomeVar2.length()-1) == nomeVar) {
+									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
+									break outerloop;
+								}
+								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[j] == '<') {
 								op = 2;
-								break;
+								nomeVar2 = bufferLinha.toString();
+								if(nomeVar2 != nomeVar) {
+									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
+									break outerloop;
+								}
+								bufferLinha.delete(0, bufferLinha.length());
 							}
-							else if(letras[j] == '!' && letras[j+] == '=') {
+							else if(letras[j] == '!' && letras[j+1] == '=') {
+								op = 3;
+								nomeVar2 = bufferLinha.toString();
+								if(nomeVar2 != nomeVar) {
+									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
+									break outerloop;
+								}
+								j++;
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else
+								bufferLinha.append(letras[j]);
+							if(letras[j+1] == ';') { 
+								nomeVar2 = bufferLinha.toString();
+								if(!fc.palavraValida(nomeVar2)) {
+									System.out.println("[Khronus]: Erro atribuição de nome da variavel '" + nomeVar2 +"' inválido. [Linha " + linha + "]");
+								}
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							j++;
+						}
+						j++;
+						int var1 = getArmazenamentoCont(nomeVar);
+						int var2 = getArmazenamentoCont(nomeVar2);
+						int loops;
+						if(op == 1) {
+							loops = var1-var2; // Quantidade de LOOP`s
+						}
+						if(op == 2) {
+							loops = var2-var1;
+						}
+						if(op == 3) {
+							loops = Math.abs(var2-var1);
+						}
+						bufferLinha.append(letras[j]); // para achar o iterador
+						op = 0;
+						while(letras[j] != ')') {
+							if(letras[j] == '+' && letras[j+1] == '+') {
+								op = 1;
+								j++;
+								break outerloop;
+							}
+							else if(letras[j] == '-' && letras[j+1] == '-') {
+								op = 2;
+								j++;
+								break outerloop;
+							}
+							else if(letras[j] == '+' && letras[j+1] == '=') {
 								op = 3;
 								j++;
-								break;
+								break outerloop;
 							}
-							else {
-								System.out.println("[Khronus]: Operador inválido. [Linha " + linha + "]");
-								break;
+							else if(letras[j] == '-' && letras[j+1] == '=') {
+								op = 4;
+								j++;
+								break outerloop;
 							}
 							bufferLinha.append(letras[j]);
 							j++;
 						}
+						nomeVar = bufferLinha.toString();
+						if(!fc.palavraValida(nomeVar)) {
+							System.out.println("[Khronus]: Erro atribuição de nome da variavel '" + nomeVar +"' inválido. [Linha " + linha + "]");
+							break outerloop;
+						}
+						/*
+						if(op == 1) {
+							atribuir.incrementaVar(pegarInteiro);
+						}
+						else if(op == 2) {
+							atribuir.decrementaVar(pegarInteiro);
+						}
+						else if(op == 3 || op == 4) {
+							int conteudo = Integer.parseInt(conteudoVar);
+							atribuir.addVar(pegarInteiro, conteudo);
+						}*/
+						bufferLinha.delete(0, bufferLinha.length());
 					}
 				}
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
@@ -601,17 +679,17 @@ class Escanear {
 							break;
 						}
 						else if(letras[j] == '-' && letras[j+1] == '-') {
-							op = 2;
+							op = 3;
 							j++;
 							break;
 						}
 						else if(letras[j] == '+' && letras[j+1] == '=') {
-							op = 2;
+							op = 4;
 							j++;
 							break;
 						}
 						else if(letras[j] == '-' && letras[j+1] == '=') {
-							op = 2;
+							op = 5;
 							j++;
 							break;
 						}

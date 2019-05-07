@@ -1,6 +1,5 @@
-new variavel = 1;
 new y = 1;
 new x = 2;
 y++;
 x = 20;
-if(x == y)
+for(x; x>y; x++)

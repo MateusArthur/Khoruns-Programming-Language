@@ -20,6 +20,9 @@ class Armazenamento{
 	//Array para armazenar as variaveis tipo string declaradas no arquivo .kh.
 	private List<myString> strings = new ArrayList<myString>();
 
+	//Array para armazenar as informacoes contidas dentro do loop
+	private List<For> loops = new ArrayList<For>();
+
 	//Cria um inteiro e armazena no armazenamento.
 	public void setInteiro(String n, int c){
 		Inteiro aux = new Inteiro();

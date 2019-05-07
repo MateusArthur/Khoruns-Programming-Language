@@ -1,3 +1,6 @@
+import java.io.*;
+import java.util.*;
+
 class Funcoes 
 {
 	public static boolean palavraValida(String pal) 
@@ -47,5 +50,25 @@ class Funcoes
 				return true;
 		}
 		return false;
+	}
+	public static void percorrerChaves(Scanner input, int linhas) {
+		while(input.hasNext()) {
+			String line = input.nextLine();
+			line = line.replaceAll("\\s+", ""); // Remover espaços da linha
+			char [] letras = line.toCharArray();
+			StringBuilder bufferLinha =  new StringBuilder();
+			int tamanhoLinha = letras.length-1;
+			int chaves = 0;
+			if(letras[tamanhoLinha] == '{') {
+				chaves++;
+			}
+			else if(letras[tamanhoLinha] == '}') {
+				chaves--;
+			}
+			if(chaves == 0) {
+				break;
+			}
+			linhas++;
+		}
 	}
 }
