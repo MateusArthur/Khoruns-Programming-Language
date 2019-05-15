@@ -1,12 +1,6 @@
 class Atribuir{
-
-	//Metodo para atribuir um valor inteiro a uma variavel.
-	public void atribuiVarInt(Inteiro a, int b){
-		a.setConteudo(b);
-	}
-
 	//Metodo para atribuir o valor de uma variavel a outra.
-	public void atribuiVarVar(Inteiro a, Inteiro b){
+	public void atribuiVarVar(Float a, Float b){
 		a.setConteudo(b.getConteudo() + a.getConteudo());
 	}
 
@@ -25,4 +19,3 @@ class Atribuir{
 		a.setConteudo(a.getConteudo() + val);
 	}
 }
-
