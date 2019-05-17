@@ -58,6 +58,7 @@ class Escanear {
 			}
 
 
+
 			else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
 
 			}
@@ -642,6 +643,7 @@ class Escanear {
 							j++;
 							break;
 						}
+
 						bufferLinha.append(letras[j]);
 						j++;
 					}
@@ -656,7 +658,7 @@ class Escanear {
 					conteudoVar = bufferLinha.toString();
 					if(op == 1) {
 						int conteudo = Integer.parseInt(conteudoVar);
-	                	atribuir.atribuiVarInt(pegarInteiro, conteudo);
+	          atribuir.atribuiVarInt(pegarInteiro, conteudo);
 					}
 					else if(op == 2) {
 						atribuir.incrementaVar(pegarInteiro);
@@ -664,8 +666,13 @@ class Escanear {
 					else if(op == 3) {
 						atribuir.decrementaVar(pegarInteiro);
 					}
-					else if(op == 4 || op == 5) {
+					else if(op == 4) {
 						int conteudo = Integer.parseInt(conteudoVar);
+						atribuir.addVar(pegarInteiro, conteudo);
+					}
+					else if(op == 5) {
+						int conteudo = Integer.parseInt(conteudoVar);
+						conteudo = conteudo * -1;
 						atribuir.addVar(pegarInteiro, conteudo);
 					}
 				}

@@ -22,7 +22,6 @@ class Atribuir{
 
 	//Para somar ou diminuir
 	public void addVar(Inteiro a, int val) {
-		a.setConteudo(a.getConteudo() + val);
+			a.setConteudo(a.getConteudo() + val);
 	}
 }
-
