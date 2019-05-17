@@ -1,5 +1,7 @@
 new y = 1;
 new x = 2;
+print();
 y++;
 x = 20;
 for(x; x>y; x++)
+print()

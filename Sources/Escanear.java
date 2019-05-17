@@ -56,6 +56,8 @@ class Escanear {
 	            int conteudo = Integer.parseInt(conteudoVar);
                 arm.setInteiro(nomeVar, conteudo);
 			}
+
+
 			else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
 
 			}
@@ -507,7 +509,7 @@ class Escanear {
 							}
 							else
 								bufferLinha.append(letras[j]);
-							if(letras[j+1] == ';') { 
+							if(letras[j+1] == ';') {
 								nomeVar2 = bufferLinha.toString();
 								if(!fc.palavraValida(nomeVar2)) {
 									System.out.println("[Khronus]: Erro atribuição de nome da variavel '" + nomeVar2 +"' inválido. [Linha " + linha + "]");
@@ -574,33 +576,40 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 					}
 				}
+
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
-					// Verificar se é um texto ou var
-					// print funcionara da seguinte maneira: print("Inteiro: %d or %i, Float: %f, String: %s", int, float, string);
-					if(letras[6] == '"') {
+					Print imprimir = new Print();
+
+					if(letras[6] == '"'){
 						int j = 7;
-						while(letras[j] != '"') {
-							if(letras[j] == '%' && letras[j+1] == 'd' || letras[j] == '%' && letras[j+1] == 'i') {
-								bufferLinha.append("s");
-								j++;
-							}
-							else if(letras[j] == '%' && letras[j+1] == 'f') {
-
-							}
-							else if(letras[j] == '%' && letras[j+1] == 's') {
-
-							}
-							else
+						while(letras[j] != '"'){
 								bufferLinha.append(letras[j]);
-							j++;
+								j++;
 						}
-						System.out.println(bufferLinha.toString());
-						bufferLinha.delete(0, bufferLinha.length());
-					}
-					else {
 
+						String armazenaString = bufferLinha.toString();
+						bufferLinha.delete(0, bufferLinha.length());
+
+
+						if(letras[j + 1] == ","){
+								j += 2;
+								while(letras[j] != ')'){
+									bufferLinha.append(letras[j]);
+									j++;
+								}
+
+								String armazenaVar = bufferLinha.toString();
+
+								imprimir.printarNaTelaStringInteiro(string, this.arm.getInteiro(armazenaVar));
+
+						}	else {
+								imprimir.printarNaTelaString(armazenaString);
+						}
 					}
+
+					bufferLinha.delete(0, bufferLinha.length());
 				}
+
 				else {
 					Inteiro pegarInteiro = new Inteiro();
 					//Atribuicao de valores
