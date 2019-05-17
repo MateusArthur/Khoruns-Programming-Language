@@ -578,6 +578,7 @@ class Escanear {
 				}
 
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
+					bufferLinha.delete(0, bufferLinha.length());
 					Print imprimir = new Print();
 
 					if(letras[6] == '"'){
@@ -591,7 +592,7 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 
 
-						if(letras[j + 1] == ","){
+						if(letras[j + 1] == ','){
 								j += 2;
 								while(letras[j] != ')'){
 									bufferLinha.append(letras[j]);
@@ -600,7 +601,7 @@ class Escanear {
 
 								String armazenaVar = bufferLinha.toString();
 
-								imprimir.printarNaTelaStringInteiro(string, this.arm.getInteiro(armazenaVar));
+								imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
 
 						}	else {
 								imprimir.printarNaTelaString(armazenaString);

@@ -1,7 +1,6 @@
-new y = 1;
-new x = 2;
-print();
-y++;
-x = 20;
-for(x; x>y; x++)
-print()
+new x = 22;
+print("TESTE = ", x);
+new y = 33;
+print("TESTE = ", y);
+x += 10;
+print("", x);
