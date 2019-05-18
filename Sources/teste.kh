@@ -1,3 +1,2 @@
-
-new x = 22;
-print("TESTE = ", x);
+new x;
+x = 4*2;

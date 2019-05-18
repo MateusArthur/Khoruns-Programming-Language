@@ -55,12 +55,10 @@ class Escanear {
 					}
 					// bufferLinha contém o valor da variavel
 					if(conteudoVar == "")
-						conteudoVar = bufferLinha.toString();
+						conteudoVar = "0";
 		            int conteudo = Integer.parseInt(conteudoVar);
 	                arm.setInteiro(nomeVar, conteudo);
 				}
-
-
 
 				else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
 
@@ -546,14 +544,30 @@ class Escanear {
 						nomeVar = bufferLinha.toString();
 						pegarInteiro = getArmazenamento(nomeVar);
 						bufferLinha.delete(0, bufferLinha.length());
+						String conteudoVar2 = "";
+						String operador = "";
 						j++;
 						while(letras[j] != ';') {
+							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
+								conteudoVar2 = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+								operador = ""+letras[j];
+								j++;
+							}
 							bufferLinha.append(letras[j]);
 							j++;
 						}
 						conteudoVar = bufferLinha.toString();
+						System.out.println(conteudoVar2);
+						System.out.println(operador);
+						System.out.println(conteudoVar);
 						if(op == 1) {
-							int conteudo = Integer.parseInt(conteudoVar);
+							int conteudo;
+							if(conteudoVar2 != null)
+								conteudo = 2;
+								//conteudo = exp.calcula(conteudoVar2, conteudoVar, operador);
+							else 
+								conteudo = Integer.parseInt(conteudoVar);
 		          			atribuir.atribuiVarInt(pegarInteiro, conteudo);
 						}
 						else if(op == 2) {
