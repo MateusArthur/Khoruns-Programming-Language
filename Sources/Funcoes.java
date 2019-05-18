@@ -17,6 +17,14 @@ class Funcoes
 		}
 		return true;
 	}
+
+	public static boolean operadoresValidos(char pal) 
+	{
+		if(pal == '>' || pal == '<' || pal == '=') 
+			return true;
+		return false;
+	}
+
 	public static int posicaoLivre(int v[]) {
 		for(int x = 0; x < v.length; x++) {
 			if(v[x] == -1)

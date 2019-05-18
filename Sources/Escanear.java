@@ -63,6 +63,7 @@ class Escanear {
 
 			}
 			else {
+				char [] armLetras = line.toCharArray();
 				line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 				letras = line.toCharArray(); // Tranformar novamente agora sem espaços
 				if(letras[0] == 'p' && letras[1] == 'u' && letras[2] == 'b' && letras[3] == 'l' && letras[4] == 'i' && letras[5] == 'c' && letras[6] == '(') {
@@ -438,177 +439,67 @@ class Escanear {
 					}
 					bufferLinha.delete(0, bufferLinha.length());
 				}
-				else if(letras[0] == 'f' && letras[1] == 'o' && letras[2] == 'r' && letras[3] == '(') {
-					if(letras[4] == 'n' && letras[5] == 'e' && letras[6] == 'w') {
-						int j = 7;
-						while(letras[j] != ';') {
-							if(letras[j] == '=') {
-								nomeVar = bufferLinha.toString();
-								if(!fc.palavraValida(nomeVar)) {
-									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
-									break outerloop;
-								}
-								bufferLinha.delete(0, bufferLinha.length());
-							}
-							bufferLinha.append(letras[j]);
-							j++;
-						}
-						// Verificar se variavel existe se não apresenta erro, faltar fazer a classe
-						if(nomeVar == "") {
-							nomeVar = bufferLinha.toString();
-							if(!fc.palavraValida(nomeVar)) {
-								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
-								break outerloop;
-							}
-							bufferLinha.delete(0, bufferLinha.length());
-						}
-					} // verificar se a variavel ja foi instânciada
-					else {
-						int j = 4;
-						while(letras[j] != ';') {
-							System.out.println(letras[j]);
-							bufferLinha.append(letras[j]);
-							j++;
-						}
+				else if(letras[0] == 'w' && letras[1] == 'h' && letras[2] == 'i' && letras[3] == 'l' && letras[4] == 'e' && letras[5] == '(') {
+					int j = 6;
+					while(!fc.operadoresValidos(letras[j])) {
+						bufferLinha.append(letras[j]);
 						j++;
-						nomeVar = bufferLinha.toString();
-						if(getArmazenamento(nomeVar) == null) {
-							break outerloop;
-						}
-						int conteudo = getArmazenamentoCont(nomeVar);
-						bufferLinha.delete(0, bufferLinha.length());
-						int op = 0;
-						String nomeVar2 = "";
-						while(letras[j] != ';') {
-							if(letras[j] == '>') {
-								op = 1;
-								nomeVar2 = bufferLinha.toString();
-								if(nomeVar2.substring(0, nomeVar2.length()-1) == nomeVar) {
-									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
-									break outerloop;
-								}
-								bufferLinha.delete(0, bufferLinha.length());
-							}
-							else if(letras[j] == '<') {
-								op = 2;
-								nomeVar2 = bufferLinha.toString();
-								if(nomeVar2 != nomeVar) {
-									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
-									break outerloop;
-								}
-								bufferLinha.delete(0, bufferLinha.length());
-							}
-							else if(letras[j] == '!' && letras[j+1] == '=') {
-								op = 3;
-								nomeVar2 = bufferLinha.toString();
-								if(nomeVar2 != nomeVar) {
-									System.out.println("[Khronus]: Erro na syntaxe do loop. [Linha " + linha + "]");
-									break outerloop;
-								}
-								j++;
-								bufferLinha.delete(0, bufferLinha.length());
-							}
-							else
-								bufferLinha.append(letras[j]);
-							if(letras[j+1] == ';') {
-								nomeVar2 = bufferLinha.toString();
-								if(!fc.palavraValida(nomeVar2)) {
-									System.out.println("[Khronus]: Erro atribuição de nome da variavel '" + nomeVar2 +"' inválido. [Linha " + linha + "]");
-								}
-								bufferLinha.delete(0, bufferLinha.length());
-							}
-							j++;
-						}
-						j++;
-						int var1 = getArmazenamentoCont(nomeVar);
-						int var2 = getArmazenamentoCont(nomeVar2);
-						int loops;
-						if(op == 1) {
-							loops = var1-var2; // Quantidade de LOOP`s
-						}
-						if(op == 2) {
-							loops = var2-var1;
-						}
-						if(op == 3) {
-							loops = Math.abs(var2-var1);
-						}
-						bufferLinha.append(letras[j]); // para achar o iterador
-						op = 0;
-						while(letras[j] != ')') {
-							if(letras[j] == '+' && letras[j+1] == '+') {
-								op = 1;
-								j++;
-								break outerloop;
-							}
-							else if(letras[j] == '-' && letras[j+1] == '-') {
-								op = 2;
-								j++;
-								break outerloop;
-							}
-							else if(letras[j] == '+' && letras[j+1] == '=') {
-								op = 3;
-								j++;
-								break outerloop;
-							}
-							else if(letras[j] == '-' && letras[j+1] == '=') {
-								op = 4;
-								j++;
-								break outerloop;
-							}
-							bufferLinha.append(letras[j]);
-							j++;
-						}
-						nomeVar = bufferLinha.toString();
-						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome da variavel '" + nomeVar +"' inválido. [Linha " + linha + "]");
-							break outerloop;
-						}
-						/*
-						if(op == 1) {
-							atribuir.incrementaVar(pegarInteiro);
-						}
-						else if(op == 2) {
-							atribuir.decrementaVar(pegarInteiro);
-						}
-						else if(op == 3 || op == 4) {
-							int conteudo = Integer.parseInt(conteudoVar);
-							atribuir.addVar(pegarInteiro, conteudo);
-						}*/
-						bufferLinha.delete(0, bufferLinha.length());
 					}
+					String armazenaVar = bufferLinha.toString();	
+					int var1 = getArmazenamentoCont(armazenaVar);
+					System.out.println(var1);
 				}
-
 				else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
 					bufferLinha.delete(0, bufferLinha.length());
 					Print imprimir = new Print();
+					int x = 0;
 
-					if(letras[6] == '"'){
-						int j = 7;
-						while(letras[j] != '"'){
-								bufferLinha.append(letras[j]);
-								j++;
+					while(letras[x] != '(')
+						x++;
+					x++;
+					if(letras[x] != '"')
+					{
+						while(letras[x] != ')') {
+							bufferLinha.append(letras[x]);
+							x++;
 						}
+						String armazenaVar = bufferLinha.toString();
+						imprimir.printarNaTelaStringInteiro("", this.arm.getInteiro(armazenaVar));
+					}
+					else {
+						int j = 0;
+						while(armLetras[j] != '"')
+							j++;
 
-						String armazenaString = bufferLinha.toString();
-						bufferLinha.delete(0, bufferLinha.length());
-
-
-						if(letras[j + 1] == ','){
-								j += 2;
-								while(letras[j] != ')'){
-									bufferLinha.append(letras[j]);
+						if(armLetras[j] == '"')
+						{
+							j++;
+							while(armLetras[j] != '"'){
+									bufferLinha.append(armLetras[j]);
 									j++;
-								}
+							}
 
-								String armazenaVar = bufferLinha.toString();
+							String armazenaString = bufferLinha.toString();
+							bufferLinha.delete(0, bufferLinha.length());
+							j = x; // economizar loops
+							while(letras[j] != ',') 
+								j++;
+							if(letras[j] == ','){
+									j ++;
+									while(letras[j] != ')'){
+										bufferLinha.append(letras[j]);
+										j++;
+									}
 
-								imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
+									String armazenaVar = bufferLinha.toString();
 
-						}	else {
-								imprimir.printarNaTelaString(armazenaString);
+									imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
+
+							}	else {
+									imprimir.printarNaTelaString(armazenaString);
+							}
 						}
 					}
-
 					bufferLinha.delete(0, bufferLinha.length());
 				}
 
@@ -658,7 +549,7 @@ class Escanear {
 					conteudoVar = bufferLinha.toString();
 					if(op == 1) {
 						int conteudo = Integer.parseInt(conteudoVar);
-	          atribuir.atribuiVarInt(pegarInteiro, conteudo);
+	          			atribuir.atribuiVarInt(pegarInteiro, conteudo);
 					}
 					else if(op == 2) {
 						atribuir.incrementaVar(pegarInteiro);
