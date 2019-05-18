@@ -482,21 +482,23 @@ class Escanear {
 							String armazenaString = bufferLinha.toString();
 							bufferLinha.delete(0, bufferLinha.length());
 							j = x; // economizar loops
-							while(letras[j] != ',') 
+							while(letras[j] != ',') {
 								j++;
+								if(letras[j] == ')')
+									break;
+							}
 							if(letras[j] == ','){
 									j ++;
 									while(letras[j] != ')'){
 										bufferLinha.append(letras[j]);
 										j++;
 									}
-
 									String armazenaVar = bufferLinha.toString();
-
 									imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
 
-							}	else {
-									imprimir.printarNaTelaString(armazenaString);
+							}
+							else {
+								imprimir.printarNaTelaString(armazenaString);
 							}
 						}
 					}
