@@ -1,31 +1,33 @@
 class Expressoes{
   private int a, b;
 
-  public void calcula(String[] vetor, Inteiro var){
+  public int calcula(String oa, String ob, String op){
     //a = vetor[0].charAt(0);
-    a = Integer.parseInt(vetor[0]);//Passar o valor do Indice [0] do Vetor de Character para Inteiro.
-    b = Integer.parseInt(vetor[2]);//Passar o valor do Indice [2] do Vetor de Character para Inteiro.
+    a = Integer.parseInt(oa);//Passar o valor do Indice [0] do Vetor de Character para Inteiro.
+    b = Integer.parseInt(ob);//Passar o valor do Indice [2] do Vetor de Character para Inteiro.
 
-    if(vetor[1].equals("+")){
-      var.setConteudo(this.soma(a, b));
+    if(op.equals("+")){
+      return this.soma(a, b);
     }
 
-    else if(vetor[1].equals("-")){
-      var.setConteudo(this.subtrai(a, b));
+    else if(op.equals("-")){
+      return this.subtrai(a, b);
     }
 
-    else if(vetor[1].equals("*")){
-      var.setConteudo(this.multiplica(a, b));
+    else if(op.equals("*")){
+      return this.multiplica(a, b);
     }
 
-    else if(vetor[1].equals("/")){
-      var.setConteudo(this.divide(a, b));
+    else if(op.equals("/")){
+      return this.divide(a, b);
     }
 
     else{
       System.out.println("ERROR");
     //  return null;
     }
+
+    return 0;
   }
 
 
@@ -35,16 +37,16 @@ class Expressoes{
 
 
   public int subtrai(int a, int b){
-      return a + b;
+      return a - b;
   }
 
 
   public int multiplica(int a, int b){
-      return a + b;
+      return a * b;
   }
 
 
   public int divide(int a, int b){
-      return a + b;
+      return a / b;
   }
 }

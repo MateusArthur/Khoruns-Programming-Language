@@ -446,7 +446,7 @@ class Escanear {
 							bufferLinha.append(letras[j]);
 							j++;
 						}
-						String armazenaVar = bufferLinha.toString();	
+						String armazenaVar = bufferLinha.toString();
 						int var1 = getArmazenamentoCont(armazenaVar);
 						System.out.println(var1);
 					}
@@ -546,6 +546,7 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 						String conteudoVar2 = "";
 						String operador = "";
+						Expressoes exp = new Expressoes();
 						j++;
 						while(letras[j] != ';') {
 							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
@@ -558,15 +559,19 @@ class Escanear {
 							j++;
 						}
 						conteudoVar = bufferLinha.toString();
-						System.out.println(conteudoVar2);
-						System.out.println(operador);
-						System.out.println(conteudoVar);
+
+						int resultado = exp.calcula(conteudoVar, conteudoVar2, operador);
+
+						System.out.println("resultado");
+						System.out.println(resultado);
+
+
 						if(op == 1) {
 							int conteudo;
 							if(conteudoVar2 != null)
 								conteudo = 2;
 								//conteudo = exp.calcula(conteudoVar2, conteudoVar, operador);
-							else 
+							else
 								conteudo = Integer.parseInt(conteudoVar);
 		          			atribuir.atribuiVarInt(pegarInteiro, conteudo);
 						}
