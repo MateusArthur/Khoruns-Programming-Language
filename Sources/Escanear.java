@@ -6,6 +6,8 @@ class Escanear {
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
 	private Atribuir atribuir = new Atribuir();
+  private Expressoes exp = new Expressoes();
+
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -22,11 +24,12 @@ class Escanear {
 			// Descobrir se é uma nova variavel
 			if(line.length() != 0){
 
+
+				//Cria uma nova variavel
 				if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') {
 					// Zerar as variaveis após a verificação do espaço
 					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
-
 					// pegar o ultimo char e ve se ter ;
 					if(line.charAt(line.length()-1) != ';') {
 						System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
@@ -35,26 +38,38 @@ class Escanear {
 					int j = 3;
 					while(letras[j] != ';') {
 						if(letras[j] == '=') {
-							nomeVar = bufferLinha.toString(); // achamos o nome da variave
-
+							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
 							if(!fc.palavraValida(nomeVar)) {
 								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 								return;
 							}
-
 							bufferLinha.delete(0, bufferLinha.length()); // apagar
-
-						}else{// para não adicionar o igual
-
+						}
+						else // para não adicionar o igual
 							bufferLinha.append(letras[j]);
+						if(j == line.length()-2 && nomeVar == "") { // case: não ter igual
+							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+							if(!fc.palavraValida(nomeVar)) {
+								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+								break outerloop;
+							}
+							bufferLinha.delete(0, bufferLinha.length()); // apagar
 						}
 
 						conteudoVar = bufferLinha.toString();
 						j++;
 					}
+					// bufferLinha contém o valor da variavel
 
-					int conteudo = Integer.parseInt(conteudoVar);
-	        arm.setInteiro(nomeVar, conteudo);
+					int conteudo = 0;
+					try{
+						conteudo = Integer.parseInt(conteudoVar);
+					}catch(Exception erro){
+						conteudo = 0;
+					}
+
+					arm.setInteiro(nomeVar, conteudo);
+
 				}
 
 				else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
@@ -497,6 +512,7 @@ class Escanear {
 						int j = 0;
 						int op = 0;
 						bufferLinha.delete(0, bufferLinha.length());
+
 						while(1 > 0){
 							if(letras[j] == '=') {
 								op = 1;
@@ -529,33 +545,63 @@ class Escanear {
 
 						nomeVar = bufferLinha.toString();
 						bufferLinha.delete(0, bufferLinha.length());
-						Expressoes exp = new Expressoes();
-
-						String conteudoVar2 = "";
-						String operador = "";
-						j++;
-						while(letras[j] != ';') {
-							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
-								conteudoVar2 = bufferLinha.toString();
-								bufferLinha.delete(0, bufferLinha.length());
-								operador = ""+letras[j];
-								j++;
-							}
-							bufferLinha.append(letras[j]);
-							j++;
-						}
-						conteudoVar = bufferLinha.toString();
-						this.atribuir.atribuiVarInt(this.arm.getInteiro(nomeVar), exp.calcula(conteudoVar2, conteudoVar, operador));
 
 						if(op == 1) {
-							int conteudo;
-							if(conteudoVar2 != null)
-								conteudo = 2;
-								//conteudo = exp.calcula(conteudoVar2, conteudoVar, operador);
-							else
-								conteudo = Integer.parseInt(conteudoVar);
-		          			atribuir.atribuiVarInt(pegarInteiro, conteudo);
+							j+=1;
+							String operandoA = "";
+							String operandoB = "";
+							String operador = "";
+							int oa, ob;
+							boolean confirmaExpressao = false;
+
+							while(letras[j] != ';') {
+								if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
+									confirmaExpressao = true;
+									operandoA = bufferLinha.toString();
+									bufferLinha.delete(0, bufferLinha.length());
+									operador = "" + letras[j];
+									j++;
+								}
+								bufferLinha.append(letras[j]);
+								j++;
+							}
+
+							operandoB = bufferLinha.toString();
+							bufferLinha.delete(0, bufferLinha.length());
+
+							try{
+							  ob = Integer.parseInt(operandoB);
+							} catch (Exception erro){
+								ob = this.arm.getInteiro(operandoB).getConteudo();
+							}
+
+							if(confirmaExpressao){
+								try{
+								  oa = Integer.parseInt(operandoA);
+								} catch (Exception erro){
+								  oa = this.arm.getInteiro(operandoA).getConteudo();
+								}
+
+								this.atribuir.atribuiVarInt(this.arm.getInteiro(nomeVar), exp.calcula(oa, ob, operador));
+
+							}else{
+								this.atribuir.atribuiVarInt(this.arm.getInteiro(nomeVar), ob);
+							}
+
 						}
+
+
+
+
+
+
+
+
+
+
+
+
+
 						else if(op == 2) {
 							atribuir.incrementaVar(pegarInteiro);
 						}
