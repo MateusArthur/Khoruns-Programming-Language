@@ -1,7 +1,6 @@
 class Print{
   public void printarNaTelaStringInteiro(String n, Inteiro i){
-    int aux = i.getConteudo();
-    System.out.println(n + aux);
+    System.out.println(n + i.getConteudo());
   }
 
   public void printarNaTelaString(String n){

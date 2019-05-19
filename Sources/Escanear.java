@@ -20,12 +20,13 @@ class Escanear {
 			StringBuilder bufferLinha =  new StringBuilder();
 			// Fim das varaiveis
 			// Descobrir se é uma nova variavel
-			if(line.length() != 0)
-			{
+			if(line.length() != 0){
+
 				if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') {
 					// Zerar as variaveis após a verificação do espaço
 					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
+
 					// pegar o ultimo char e ve se ter ;
 					if(line.charAt(line.length()-1) != ';') {
 						System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
@@ -34,30 +35,26 @@ class Escanear {
 					int j = 3;
 					while(letras[j] != ';') {
 						if(letras[j] == '=') {
-							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+							nomeVar = bufferLinha.toString(); // achamos o nome da variave
+
 							if(!fc.palavraValida(nomeVar)) {
 								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
 								return;
 							}
+
 							bufferLinha.delete(0, bufferLinha.length()); // apagar
-						}
-						else // para não adicionar o igual
+
+						}else{// para não adicionar o igual
+
 							bufferLinha.append(letras[j]);
-						if(j == line.length()-2 && nomeVar == "") { // case: não ter igual
-							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
-							if(!fc.palavraValida(nomeVar)) {
-								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-								break outerloop;
-							}
-							bufferLinha.delete(0, bufferLinha.length()); // apagar
 						}
+
+						conteudoVar = bufferLinha.toString();
 						j++;
 					}
-					// bufferLinha contém o valor da variavel
-					if(conteudoVar == "")
-						conteudoVar = "0";
-		            int conteudo = Integer.parseInt(conteudoVar);
-	                arm.setInteiro(nomeVar, conteudo);
+
+					int conteudo = Integer.parseInt(conteudoVar);
+	        arm.setInteiro(nomeVar, conteudo);
 				}
 
 				else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
@@ -67,21 +64,8 @@ class Escanear {
 					char [] armLetras = line.toCharArray();
 					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
-					if(letras[0] == 'p' && letras[1] == 'u' && letras[2] == 'b' && letras[3] == 'l' && letras[4] == 'i' && letras[5] == 'c' && letras[6] == '(') {
-						int x = 8;
-						while(letras[x] != ')')	{
-							bufferLinha.append(letras[x]);
-							x++;
-						}
-						nomeVar = bufferLinha.toString(); // achamos o nome da variavel
-						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
-							break outerloop;
-						}
-						bufferLinha.delete(0, bufferLinha.length());
-						//Fim primeira parte da public, adicionar a linha da public para saber a posição que começa e termina
-					}
-					else if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
+
+					if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
 						String nomeVar2 = "";
 						int operador = 0;
@@ -450,60 +434,61 @@ class Escanear {
 						int var1 = getArmazenamentoCont(armazenaVar);
 						System.out.println(var1);
 					}
+
 					else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
-						bufferLinha.delete(0, bufferLinha.length());
-						Print imprimir = new Print();
-						int x = 0;
+							bufferLinha.delete(0, bufferLinha.length());
+							Print imprimir = new Print();
+							int x = 0;
 
-						while(letras[x] != '(')
-							x++;
-						x++;
-						if(letras[x] != '"')
-						{
-							while(letras[x] != ')') {
-								bufferLinha.append(letras[x]);
+							while(letras[x] != '(')
 								x++;
-							}
-							String armazenaVar = bufferLinha.toString();
-							imprimir.printarNaTelaStringInteiro("", this.arm.getInteiro(armazenaVar));
-						}
-						else {
-							int j = 0;
-							while(armLetras[j] != '"')
-								j++;
-
-							if(armLetras[j] == '"')
+							x++;
+							if(letras[x] != '"')
 							{
-								j++;
-								while(armLetras[j] != '"'){
-										bufferLinha.append(armLetras[j]);
-										j++;
+								while(letras[x] != ')') {
+									bufferLinha.append(letras[x]);
+									x++;
 								}
-
-								String armazenaString = bufferLinha.toString();
-								bufferLinha.delete(0, bufferLinha.length());
-								j = x; // economizar loops
-								while(letras[j] != ',') {
+								String armazenaVar = bufferLinha.toString();
+								imprimir.printarNaTelaStringInteiro("", this.arm.getInteiro(armazenaVar));
+							}
+							else {
+								int j = 0;
+								while(armLetras[j] != '"')
 									j++;
-									if(letras[j] == ')')
-										break;
-								}
-								if(letras[j] == ','){
-										j ++;
-										while(letras[j] != ')'){
-											bufferLinha.append(letras[j]);
-											j++;
-										}
-										String armazenaVar = bufferLinha.toString();
-										imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
 
-								}
-								else {
-									imprimir.printarNaTelaString(armazenaString);
+								if(armLetras[j] == '"')
+								{
+									j++;
+									while(armLetras[j] != '"'){
+											bufferLinha.append(armLetras[j]);
+											j++;
+									}
+
+									String armazenaString = bufferLinha.toString();
+									bufferLinha.delete(0, bufferLinha.length());
+									j = x; // economizar loops
+									while(letras[j] != ',') {
+										j++;
+										if(letras[j] == ')')
+											break;
+									}
+									if(letras[j] == ','){
+											j ++;
+											while(letras[j] != ')'){
+												bufferLinha.append(letras[j]);
+												j++;
+											}
+											String armazenaVar = bufferLinha.toString();
+											imprimir.printarNaTelaStringInteiro(armazenaString, this.arm.getInteiro(armazenaVar));
+
+									}
+									else {
+										imprimir.printarNaTelaString(armazenaString);
+									}
 								}
 							}
-						}
-						bufferLinha.delete(0, bufferLinha.length());
+								bufferLinha.delete(0, bufferLinha.length());
 					}
 
 					else {
@@ -541,12 +526,13 @@ class Escanear {
 							bufferLinha.append(letras[j]);
 							j++;
 						}
+
 						nomeVar = bufferLinha.toString();
-						pegarInteiro = getArmazenamento(nomeVar);
 						bufferLinha.delete(0, bufferLinha.length());
+						Expressoes exp = new Expressoes();
+
 						String conteudoVar2 = "";
 						String operador = "";
-						Expressoes exp = new Expressoes();
 						j++;
 						while(letras[j] != ';') {
 							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
@@ -559,12 +545,7 @@ class Escanear {
 							j++;
 						}
 						conteudoVar = bufferLinha.toString();
-
-						int resultado = exp.calcula(conteudoVar, conteudoVar2, operador);
-
-						System.out.println("resultado");
-						System.out.println(resultado);
-
+						this.atribuir.atribuiVarInt(this.arm.getInteiro(nomeVar), exp.calcula(conteudoVar2, conteudoVar, operador));
 
 						if(op == 1) {
 							int conteudo;
@@ -594,7 +575,6 @@ class Escanear {
 				}
 			}
 			linha++;
-
 		}
 	}
 
