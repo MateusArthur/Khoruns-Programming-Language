@@ -6,6 +6,7 @@ class Escanear {
 	private Armazenamento arm = new Armazenamento();
 	private Funcoes fc = new Funcoes();
 	private Atribuir atribuir = new Atribuir();
+	private Expressoes exp = new Expressoes();
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int linha = 0;
@@ -23,39 +24,51 @@ class Escanear {
 			if(line.length() != 0){
 
 				if(letras[0] == 'n' && letras[1] == 'e' && letras[2] == 'w' && letras[3] == ' ') {
-					// Zerar as variaveis após a verificação do espaço
-					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
-					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
-
-					// pegar o ultimo char e ve se ter ;
-					if(line.charAt(line.length()-1) != ';') {
-						System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
-						break outerloop;
-					}
-					int j = 3;
-					while(letras[j] != ';') {
-						if(letras[j] == '=') {
-							nomeVar = bufferLinha.toString(); // achamos o nome da variave
-
-							if(!fc.palavraValida(nomeVar)) {
-								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-								return;
+						// Zerar as variaveis após a verificação do espaço
+						line = line.replaceAll("\\s+", ""); // Remover espaços da linha
+						letras = line.toCharArray(); // Tranformar novamente agora sem espaços
+						// pegar o ultimo char e ve se ter ;
+						if(line.charAt(line.length()-1) != ';') {
+							System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
+							break outerloop;
+						}
+						int j = 3;
+						while(letras[j] != ';') {
+							if(letras[j] == '=') {
+								nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+								if(!fc.palavraValida(nomeVar)) {
+									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+									return;
+								}
+								bufferLinha.delete(0, bufferLinha.length()); // apagar
+							}
+							else // para não adicionar o igual
+								bufferLinha.append(letras[j]);
+							if(j == line.length()-2 && nomeVar == "") { // case: não ter igual
+								nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+								if(!fc.palavraValida(nomeVar)) {
+									System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+									break outerloop;
+								}
+								bufferLinha.delete(0, bufferLinha.length()); // apagar
 							}
 
-							bufferLinha.delete(0, bufferLinha.length()); // apagar
+							conteudoVar = bufferLinha.toString();
+							j++;
+						}
+						// bufferLinha contém o valor da variavel
 
-						}else{// para não adicionar o igual
-
-							bufferLinha.append(letras[j]);
+						int conteudo = 0;
+						try{
+							conteudo = Integer.parseInt(conteudoVar);
+						}catch(Exception erro){
+							conteudo = 0;
 						}
 
-						conteudoVar = bufferLinha.toString();
-						j++;
+						arm.setInteiro(nomeVar, conteudo);
+
 					}
 
-					int conteudo = Integer.parseInt(conteudoVar);
-	        arm.setInteiro(nomeVar, conteudo);
-				}
 
 				else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's'  &&  letras[3] == 'e' && letras[4] == ' ') {
 
@@ -533,9 +546,13 @@ class Escanear {
 
 						String conteudoVar2 = "";
 						String operador = "";
+
+						boolean confirmaExp = false;
+
 						j++;
 						while(letras[j] != ';') {
 							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
+								confirmaExp = true;
 								conteudoVar2 = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 								operador = ""+letras[j];
@@ -545,30 +562,57 @@ class Escanear {
 							j++;
 						}
 						conteudoVar = bufferLinha.toString();
-
 						if(op == 1) {
-							int conteudo;
-							if(conteudoVar2 != null)
-								/*Coloca AQuiiiiiii
+							int conteudo = 0, oa = 0, ob = 0;
 
-								*/
-							else
-								conteudo = Integer.parseInt(conteudoVar);
-		          			atribuir.atribuiVarInt(pegarInteiro, conteudo);
+							if(confirmaExp){
+								try{
+									//System.out.println(conteudoVar2);
+									oa = Integer.parseInt(conteudoVar2);
+								}catch(Exception erro){
+									oa = this.arm.getInteiro(conteudoVar2).getConteudo();
+								}
+
+								try{
+									ob = Integer.parseInt(conteudoVar);
+								}catch(Exception erro){
+									ob = this.arm.getInteiro(conteudoVar).getConteudo();
+								}
+
+								atribuir.atribuiVarInt(pegarInteiro, exp.calcula(oa, ob, operador));
+
+							}
+							else {
+								try{
+									conteudo = Integer.parseInt(conteudoVar);					
+								} catch(Exception erro){
+									conteudo = getArmazenamentoCont(conteudoVar);
+								}
+							}
+							atribuir.atribuiVarInt(pegarInteiro, conteudo);
 						}
 						else if(op == 2) {
-							System.out.println(pegarInteiro);
 							atribuir.incrementaVar(pegarInteiro);
 						}
 						else if(op == 3) {
 							atribuir.decrementaVar(pegarInteiro);
 						}
 						else if(op == 4) {
-							int conteudo = Integer.parseInt(conteudoVar);
+							int conteudo;
+							try{
+								conteudo = Integer.parseInt(conteudoVar);					
+							} catch(Exception erro){
+								conteudo = getArmazenamentoCont(conteudoVar);
+							}
 							atribuir.addVar(pegarInteiro, conteudo);
 						}
 						else if(op == 5) {
-							int conteudo = Integer.parseInt(conteudoVar);
+							int conteudo;
+							try{
+								conteudo = Integer.parseInt(conteudoVar);					
+							} catch(Exception erro){
+								conteudo = getArmazenamentoCont(conteudoVar);
+							}
 							conteudo = conteudo * -1;
 							atribuir.addVar(pegarInteiro, conteudo);
 						}

@@ -1,12 +1,6 @@
-new y = 20;
-
+new y;
 new x = 10;
-
-y = 1;
-
-print(y);
-
-x++;
-print("valor x = ", x);
-x++;
+y = x;
+print("valor y = ", y);
+x+=y;
 print("valor x = ", x);
