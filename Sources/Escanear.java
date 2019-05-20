@@ -7,9 +7,11 @@ class Escanear {
 	private Funcoes fc = new Funcoes();
 	private Atribuir atribuir = new Atribuir();
 	private Expressoes exp = new Expressoes();
+	//Contador de linhas
+	int linha = 0;
 	// Interpretador
 	public void lerArq(Scanner input) {
-		int linha = 0;
+		int contChaves = 0;
 		outerloop:
 		while (input.hasNext()) {
 			// Variaveis
@@ -57,14 +59,17 @@ class Escanear {
 							j++;
 						}
 						// bufferLinha contém o valor da variavel
-
-						int conteudo = 0;
-						try{
-							conteudo = Integer.parseInt(conteudoVar);
-						}catch(Exception erro){
-							conteudo = 0;
+						if(this.arm.getInteiro(nomeVar) != null) {
+							System.out.println("[Khronus]: Erro variavel '"+nomeVar+"' ja foi criada.");
+							break outerloop;
 						}
-
+						int conteudo = 0;
+						try{  
+							conteudo = Integer.parseInt(conteudoVar);
+						} catch(Exception erro) {
+							if(this.arm.getInteiro(conteudoVar) != null)
+								conteudo = getArmazenamentoCont(conteudoVar);
+						}
 						arm.setInteiro(nomeVar, conteudo);
 
 					}
@@ -130,6 +135,7 @@ class Escanear {
 						} catch(Exception erro) {
 							varTwo = Integer.parseInt(nomeVar2); 
 						}
+
 						if(operador == 1) {
 							if(varOne != varTwo) {
 								while(input.hasNext()) {
@@ -230,14 +236,66 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 					}
 					else if(letras[0] == 'w' && letras[1] == 'h' && letras[2] == 'i' && letras[3] == 'l' && letras[4] == 'e' && letras[5] == '(') {
+						Scanner armLines;
+						armLines = input;
 						int j = 6;
-						while(!fc.operadoresValidos(letras[j])) {
+						int operador = 0;
+						String nomeVar2 = "";
+						while(letras[j] != ')') {
+							if(letras[j] == '=' && letras[j+1] == '=') {
+								j+=2;
+								operador = 1;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[j] == '>' && letras[j+1] == '=') {
+								j+=2;
+								operador = 2;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras [j] == '<' && letras[j+1] == '=') {
+								j+=2;
+								operador = 3;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[j] == '>') {
+								operador = 4;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[j] == '<') {
+								operador = 5;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
 							bufferLinha.append(letras[j]);
 							j++;
 						}
-						String armazenaVar = bufferLinha.toString();
-						int var1 = getArmazenamentoCont(armazenaVar);
-						System.out.println(var1);
+						nomeVar2 = bufferLinha.toString();
+						bufferLinha.delete(0, bufferLinha.length());
+						int varOne;
+						int varTwo;
+						try {
+							varOne = getArmazenamentoCont(nomeVar);
+						} catch(Exception erro) {
+							varOne = Integer.parseInt(nomeVar); 
+						}
+
+						try {
+							varTwo = getArmazenamentoCont(nomeVar2);
+						} catch(Exception erro) {
+							varTwo = Integer.parseInt(nomeVar2); 
+						}
+						if(operador == 1) {
+							while(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
+								System.out.println("a = " + getArmazenamentoCont(nomeVar));
+								System.out.println("b = " + getArmazenamentoCont(nomeVar2));
+								if(contChaves == 0 || contChaves == -1)
+									lerArq(input);
+							}
+						}
 					}
 
 					else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
@@ -301,112 +359,124 @@ class Escanear {
 						//Atribuicao de valores
 						int j = 0;
 						int op = 0;
-						bufferLinha.delete(0, bufferLinha.length());
-						while(1 > 0){
-							if(letras[j] == '=') {
-								op = 1;
-								break;
-							}
-							else if(letras[j] == '+' && letras[j+1] == '+') {
-								op = 2;
-								j++;
-								break;
-							}
-							else if(letras[j] == '-' && letras[j+1] == '-') {
-								op = 3;
-								j++;
-								break;
-							}
-							else if(letras[j] == '+' && letras[j+1] == '=') {
-								op = 4;
-								j++;
-								break;
-							}
-							else if(letras[j] == '-' && letras[j+1] == '=') {
-								op = 5;
-								j++;
-								break;
-							}
-
-							bufferLinha.append(letras[j]);
-							j++;
+						if(letras[j] == '{') {
+							contChaves++;
 						}
-
-						nomeVar = bufferLinha.toString();
-						pegarInteiro = getArmazenamento(nomeVar);
-						bufferLinha.delete(0, bufferLinha.length());
-
-						String conteudoVar2 = "";
-						String operador = "";
-
-						boolean confirmaExp = false;
-
-						j++;
-						while(letras[j] != ';') {
-							if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
-								confirmaExp = true;
-								conteudoVar2 = bufferLinha.toString();
-								bufferLinha.delete(0, bufferLinha.length());
-								operador = ""+letras[j];
-								j++;
+						else if(letras[j] == '}') {
+							contChaves--;
+							if(contChaves == 0) {
+								contChaves = -1;
+								//Limpar memoria
 							}
-							bufferLinha.append(letras[j]);
-							j++;
 						}
-						conteudoVar = bufferLinha.toString();
-						if(op == 1) {
-							int conteudo = 0, oa = 0, ob = 0;
-
-							if(confirmaExp){
-								try{
-									//System.out.println(conteudoVar2);
-									oa = Integer.parseInt(conteudoVar2);
-								}catch(Exception erro){
-									oa = this.arm.getInteiro(conteudoVar2).getConteudo();
+						else {
+							bufferLinha.delete(0, bufferLinha.length());
+							while(1 > 0){
+								if(letras[j] == '=') {
+									op = 1;
+									break;
+								}
+								else if(letras[j] == '+' && letras[j+1] == '+') {
+									op = 2;
+									j++;
+									break;
+								}
+								else if(letras[j] == '-' && letras[j+1] == '-') {
+									op = 3;
+									j++;
+									break;
+								}
+								else if(letras[j] == '+' && letras[j+1] == '=') {
+									op = 4;
+									j++;
+									break;
+								}
+								else if(letras[j] == '-' && letras[j+1] == '=') {
+									op = 5;
+									j++;
+									break;
 								}
 
-								try{
-									ob = Integer.parseInt(conteudoVar);
-								}catch(Exception erro){
-									ob = this.arm.getInteiro(conteudoVar).getConteudo();
-								}
-
-								atribuir.atribuiVarInt(pegarInteiro, exp.calcula(oa, ob, operador));
-
+								bufferLinha.append(letras[j]);
+								j++;
 							}
-							else {
+
+							nomeVar = bufferLinha.toString();
+							pegarInteiro = getArmazenamento(nomeVar);
+							bufferLinha.delete(0, bufferLinha.length());
+
+							String conteudoVar2 = "";
+							String operador = "";
+
+							boolean confirmaExp = false;
+
+							j++;
+							while(letras[j] != ';') {
+								if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
+									confirmaExp = true;
+									conteudoVar2 = bufferLinha.toString();
+									bufferLinha.delete(0, bufferLinha.length());
+									operador = ""+letras[j];
+									j++;
+								}
+								bufferLinha.append(letras[j]);
+								j++;
+							}
+							conteudoVar = bufferLinha.toString();
+							if(op == 1) {
+								int conteudo = 0, oa = 0, ob = 0;
+
+								if(confirmaExp){
+									try{
+										//System.out.println(conteudoVar2);
+										oa = Integer.parseInt(conteudoVar2);
+									}catch(Exception erro){
+										oa = this.arm.getInteiro(conteudoVar2).getConteudo();
+									}
+
+									try{
+										ob = Integer.parseInt(conteudoVar);
+									}catch(Exception erro){
+										ob = this.arm.getInteiro(conteudoVar).getConteudo();
+									}
+
+									atribuir.atribuiVarInt(pegarInteiro, exp.calcula(oa, ob, operador));
+
+								}
+								else {
+									try{
+										conteudo = Integer.parseInt(conteudoVar);					
+									} catch(Exception erro){
+										conteudo = getArmazenamentoCont(conteudoVar);
+									}
+									atribuir.atribuiVarInt(pegarInteiro, conteudo);
+								}
+							}
+							else if(op == 2) {
+								atribuir.incrementaVar(pegarInteiro);
+							}
+							else if(op == 3) {
+								atribuir.decrementaVar(pegarInteiro);
+							}
+							else if(op == 4) {
+								int conteudo;
 								try{
 									conteudo = Integer.parseInt(conteudoVar);					
 								} catch(Exception erro){
 									conteudo = getArmazenamentoCont(conteudoVar);
 								}
-								atribuir.atribuiVarInt(pegarInteiro, conteudo);
+								atribuir.addVar(pegarInteiro, conteudo);
 							}
-						}
-						else if(op == 2) {
-							atribuir.incrementaVar(pegarInteiro);
-						}
-						else if(op == 3) {
-							atribuir.decrementaVar(pegarInteiro);
-						}
-						else if(op == 4) {
-							int conteudo;
-							try{
-								conteudo = Integer.parseInt(conteudoVar);					
-							} catch(Exception erro){
-								conteudo = getArmazenamentoCont(conteudoVar);
+							else if(op == 5) {
+								int conteudo;
+								try{
+									conteudo = Integer.parseInt(conteudoVar);					
+								} catch(Exception erro){
+									conteudo = getArmazenamentoCont(conteudoVar);
+								}
+								conteudo = conteudo * -1;
+								atribuir.addVar(pegarInteiro, conteudo);
 							}
-							atribuir.addVar(pegarInteiro, conteudo);
-						}
-						else if(op == 5) {
-							int conteudo;
-							try{
-								conteudo = Integer.parseInt(conteudoVar);					
-							} catch(Exception erro){
-								conteudo = getArmazenamentoCont(conteudoVar);
-							}
-							conteudo = conteudo * -1;
-							atribuir.addVar(pegarInteiro, conteudo);
 						}
 					}
 				}
@@ -433,7 +503,7 @@ class Escanear {
 			return a;
 		}
 		else{
-			System.out.println("[Khronus]: Erro, a Variavel " + nome + ", não existe.");
+			System.out.println("[Khronus]: Erro, a Variavel " + nome + ", não existe. [LINHA : " + linha + "]");
 		}
 		return 0;
 	}

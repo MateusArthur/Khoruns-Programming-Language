@@ -2,10 +2,17 @@ new a;
 new b;
 a = 1+1;
 b = 3+a;
+new y = b;
 print("a = ",a);
 print("b = ",b);
-if(a == a) 
-{
+print("y = ",y);
+a=b;
+if(a == b) 
+{ 	
 	print("testando");
+	if(y == b)
+	{
+		print("testando2");
+	}
 }
 print("ola mundo");
