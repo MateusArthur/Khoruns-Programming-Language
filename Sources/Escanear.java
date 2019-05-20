@@ -588,8 +588,8 @@ class Escanear {
 								} catch(Exception erro){
 									conteudo = getArmazenamentoCont(conteudoVar);
 								}
+								atribuir.atribuiVarInt(pegarInteiro, conteudo);
 							}
-							atribuir.atribuiVarInt(pegarInteiro, conteudo);
 						}
 						else if(op == 2) {
 							atribuir.incrementaVar(pegarInteiro);

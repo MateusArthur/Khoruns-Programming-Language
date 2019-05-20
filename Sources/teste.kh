@@ -1,6 +1,6 @@
-new y;
-new x = 10;
-y = x;
-print("valor y = ", y);
-x+=y;
-print("valor x = ", x);
+new a; 
+new b;
+a = 1+1;
+b = 3+a;
+print("a = ",a);
+print("b = ",b);
