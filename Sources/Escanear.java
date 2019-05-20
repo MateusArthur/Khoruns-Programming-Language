@@ -80,349 +80,95 @@ class Escanear {
 
 					if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
-						String nomeVar2 = "";
 						int operador = 0;
-						int vetorDeCondi[] = new int[10];
-						vetorDeCondi = fc.iniciarVetor(vetorDeCondi);
+						String nomeVar2 = ""; 
 						while(letras[x] != ')') {
-							if(nomeVar == "") {
-								if(letras[x] == '=' && letras[x+1] == '=') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 1;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								else if(letras[x] == '!' && letras[x+1] == '=') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 2;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								else if(letras[x] == '>' && letras[x+1] == '=') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 3;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								else if(letras[x] == '<' && letras[x+1] == '=') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 4;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								else if(letras[x] == '>') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 5;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								else if(letras[x] == '<') {
-									nomeVar = bufferLinha.toString();
-									if(getArmazenamento(nomeVar) == null) {
-										break outerloop;
-									}
-									operador = 6;
-									bufferLinha.delete(0, bufferLinha.length());
-									x+=2;
-								}
-								bufferLinha.append(letras[x]);
+							if(letras[x] == '=' && letras[x+1] == '=') {
 								x++;
+								operador = 1;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[x] == '>' && letras[x+1] == '=') {
+								x++;
+								operador = 2;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras [x] == '<' && letras[x+1] == '=') {
+								x++;
+								operador = 3;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[x] == '>') {
+								operador = 4;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							else if(letras[x] == '<') {
+								operador = 5;
+								nomeVar = bufferLinha.toString();
+								bufferLinha.delete(0, bufferLinha.length());
+							}
+							bufferLinha.append(letras[x]);
+							x++;
+						}
+						nomeVar2 = bufferLinha.toString();
+						bufferLinha.delete(0, bufferLinha.length());
+						int varOne;
+						int varTwo;
+						try {
+							varOne = getArmazenamentoCont(nomeVar);
+						} catch(Exception erro) {
+							varOne = Integer.parseInt(nomeVar); 
+						}
+
+						try {
+							varTwo = getArmazenamentoCont(nomeVar2);
+						} catch(Exception erro) {
+							varTwo = Integer.parseInt(nomeVar2); 
+						}
+						if(operador == 1) {
+							if(varOne == varTwo) {
+								//verdade percorrer o if
 							}
 							else {
-								if(letras[x] == '&' && letras[x+1] == '&') {
-									if(operador == 1) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									else if(operador == 2) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									else if(operador == 3) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									else if(operador == 4) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									else if(operador == 5) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									else if(operador == 6) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-											break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 1; // condicao aceita
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-												break outerloop;
-											}
-										}
-										else {
-											int pos = fc.posicaoLivre(vetorDeCondi);
-											if(pos != -1) {
-												vetorDeCondi[pos] = 0; // condicao negada
-											}
-											else {
-												System.out.println("[Khronus] Erro voce ultrapassou o máximo de comparacoes possiveis. [Linha " + linha + "]");
-											}
-										}
-									}
-									bufferLinha.delete(0, bufferLinha.length());
-									x++;
-								}
-								else if(letras[x] == '|' && letras[x+1] == '|') {
-									if(fc.vetorIniciado(vetorDeCondi))
-										fc.limparVetor(vetorDeCondi);
-									if(operador == 1) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									else if(operador == 2) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 3) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 4) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 5) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 6) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-								}
-								else if(letras[x+1] == ')') {
-
-									if(operador == 1) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									else if(operador == 2) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 3) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 4) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 5) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-									if(operador == 6) {
-										nomeVar2 = bufferLinha.toString();
-										if(getArmazenamento(nomeVar2) == null) {
-												break outerloop;
-										}
-										if(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
-
-										}
-									}
-								}
-								bufferLinha.append(letras[x]);
-								x++;
+								// falso pular o if
 							}
 						}
-						nomeVar = bufferLinha.toString();
-						if(!fc.palavraValida(nomeVar)) {
-							System.out.println("[Khronus]: Erro atribuição de nome da função inválida. [Linha " + linha + "]"); // ajeitar
-							break outerloop;
+						else if(operador == 2) {
+							if(varOne >= varTwo) {
+
+							}
+							else {
+
+							}
 						}
-						bufferLinha.delete(0, bufferLinha.length());
+						else if(operador == 3) {
+							if(varOne <= varTwo) {
+
+							}
+							else {
+
+							}
+						}
+						else if(operador == 4) {
+							if(varOne > varTwo) {
+
+							}
+							else {
+
+							}
+						}
+						else if(operador == 5) {
+							if(varOne < varTwo) {
+
+							}
+							else {
+
+							}
+						}
 					}
 					else if(letras[0] == 'e' && letras[1] == 'l' && letras[2] == 's' &&  letras[3] == 'e'  &&  letras[4] == ' '  &&  letras[5] == 'i'  &&  letras[6] == 'f'  &&  letras[7] == '(') {
 						int x = 8;
