@@ -4,3 +4,8 @@ a = 1+1;
 b = 3+a;
 print("a = ",a);
 print("b = ",b);
+if(a == a) 
+{
+	print("testando");
+}
+print("ola mundo");

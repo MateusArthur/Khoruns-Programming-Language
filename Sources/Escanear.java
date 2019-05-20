@@ -84,19 +84,19 @@ class Escanear {
 						String nomeVar2 = ""; 
 						while(letras[x] != ')') {
 							if(letras[x] == '=' && letras[x+1] == '=') {
-								x++;
+								x+=2;
 								operador = 1;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '>' && letras[x+1] == '=') {
-								x++;
+								x+=2;
 								operador = 2;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras [x] == '<' && letras[x+1] == '=') {
-								x++;
+								x+=2;
 								operador = 3;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
@@ -118,6 +118,7 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 						int varOne;
 						int varTwo;
+						int chave = -1;
 						try {
 							varOne = getArmazenamentoCont(nomeVar);
 						} catch(Exception erro) {
@@ -130,43 +131,88 @@ class Escanear {
 							varTwo = Integer.parseInt(nomeVar2); 
 						}
 						if(operador == 1) {
-							if(varOne == varTwo) {
-								//verdade percorrer o if
-							}
-							else {
-								// falso pular o if
+							if(varOne != varTwo) {
+								while(input.hasNext()) {
+									String lineIf = input.nextLine(); // Armazenar Linhas
+									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+										break;
+								}
 							}
 						}
 						else if(operador == 2) {
-							if(varOne >= varTwo) {
-
-							}
-							else {
-
+							if(varOne < varTwo) {
+								while(input.hasNext()) {
+									String lineIf = input.nextLine(); // Armazenar Linhas
+									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+										break;
+								}
 							}
 						}
 						else if(operador == 3) {
-							if(varOne <= varTwo) {
-
-							}
-							else {
-
+							if(varOne > varTwo) {
+								while(input.hasNext()) {
+									String lineIf = input.nextLine(); // Armazenar Linhas
+									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+										break;
+								}
 							}
 						}
 						else if(operador == 4) {
-							if(varOne > varTwo) {
-
-							}
-							else {
-
+							if(varOne <= varTwo) {
+								while(input.hasNext()) {
+									String lineIf = input.nextLine(); // Armazenar Linhas
+									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+										break;
+								}
 							}
 						}
 						else if(operador == 5) {
-							if(varOne < varTwo) {
-
-							}
-							else {
-
+							if(varOne >= varTwo) {
+								while(input.hasNext()) {
+									String lineIf = input.nextLine(); // Armazenar Linhas
+									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+										break;
+								}
 							}
 						}
 					}
