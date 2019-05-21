@@ -23,6 +23,7 @@ class Escanear {
 			char [] letras = line.toCharArray(); // tranformar String em char
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
+			boolean habilitarElse = false;
 			// Fim das varaiveis
 			// Descobrir se é uma nova variavel
 			if(line.length() != 0){
@@ -86,6 +87,13 @@ class Escanear {
 						}
 					}
 					arm.setInteiro(nomeVar, conteudo);
+				}
+				else if(letras[xx] == 'e' && letras[xx+1] == 'l' && letras[xx+2] == 's' && letras[xx+3] == 'e') {
+						if(!habilitarElse) {
+							System.out.println("[Khronus]: Erro de syntaxe. [Linha " + linha + "]");
+							break outerloop;	
+						}
+							
 				}
 				else {
 					char [] armLetras = line.toCharArray();

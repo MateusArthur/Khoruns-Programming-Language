@@ -3,6 +3,10 @@ new j;
 j = 0;
 i = 0;
 new ue = 3;
+else
+{
+	
+}
 
 while(i < ue) 
 {
