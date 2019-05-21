@@ -1,11 +1,11 @@
 # Khrouns-Programming-Language
 
-Khrouns is a progamming language created from the java language
+### Khrouns is a progamming language created from the java language
 
-Alunos:
+##### Alunos:
 
-  -Bruno Bevilaqua
+  - Bruno Bevilaqua
   
-  -Mateus Arthur
+  - Mateus Arthur
   
-  -Nataniel Siebeneichler
+  - Nataniel Siebeneichler
