@@ -9,6 +9,8 @@ class Escanear {
 	private Expressoes exp = new Expressoes();
 	//Contador de linhas
 	int linha = 0;
+	//Armazenar loop
+	int contarLoop = 0;
 	// Interpretador
 	public void lerArq(Scanner input) {
 		int contChaves = 0;
@@ -58,17 +60,22 @@ class Escanear {
 							conteudoVar = bufferLinha.toString();
 							j++;
 						}
-						// bufferLinha contém o valor da variavel
 						if(this.arm.getInteiro(nomeVar) != null) {
 							System.out.println("[Khronus]: Erro variavel '"+nomeVar+"' ja foi criada.");
 							break outerloop;
 						}
 						int conteudo = 0;
-						try{
-							conteudo = Integer.parseInt(conteudoVar);
-						} catch(Exception erro) {
-							if(this.arm.getInteiro(conteudoVar) != null)
-								conteudo = getArmazenamentoCont(conteudoVar);
+						if(conteudoVar.equals("input()")) {
+							Scanner entrada = new Scanner(System.in);
+							conteudo = entrada.nextInt();
+						}
+						else {
+							try{
+								conteudo = Integer.parseInt(conteudoVar);
+							} catch(Exception erro) {
+								if(this.arm.getInteiro(conteudoVar) != null)
+									conteudo = getArmazenamentoCont(conteudoVar);
+							}
 						}
 						arm.setInteiro(nomeVar, conteudo);
 
@@ -82,11 +89,10 @@ class Escanear {
 					char [] armLetras = line.toCharArray();
 					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
 					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
-
 					if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
 						int operador = 0;
-						String nomeVar2 = "";
+						String nomeVar2 = ""; 
 						while(letras[x] != ')') {
 							if(letras[x] == '=' && letras[x+1] == '=') {
 								x+=2;
@@ -107,11 +113,13 @@ class Escanear {
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '>') {
+								x++;
 								operador = 4;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '<') {
+								x++;
 								operador = 5;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
@@ -124,17 +132,15 @@ class Escanear {
 						int varOne;
 						int varTwo;
 						int chave = -1;
-						try {
+						if(this.arm.getInteiro(nomeVar) != null)
 							varOne = getArmazenamentoCont(nomeVar);
-						} catch(Exception erro) {
+						else
 							varOne = Integer.parseInt(nomeVar);
-						}
 
-						try {
+						if(this.arm.getInteiro(nomeVar2) != null)
 							varTwo = getArmazenamentoCont(nomeVar2);
-						} catch(Exception erro) {
-							varTwo = Integer.parseInt(nomeVar2);
-						}
+						else
+							varTwo = Integer.parseInt(nomeVar2); 
 
 						if(operador == 1) {
 							if(varOne != varTwo) {
@@ -236,8 +242,8 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 					}
 					else if(letras[0] == 'w' && letras[1] == 'h' && letras[2] == 'i' && letras[3] == 'l' && letras[4] == 'e' && letras[5] == '(') {
-						Scanner armLines;
-						armLines = input;
+						contarLoop++;
+						String nomeLoop = "while"+contarLoop+".txt";
 						int j = 6;
 						int operador = 0;
 						String nomeVar2 = "";
@@ -261,11 +267,13 @@ class Escanear {
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[j] == '>') {
+								j++;
 								operador = 4;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[j] == '<') {
+								j++;
 								operador = 5;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
@@ -277,25 +285,98 @@ class Escanear {
 						bufferLinha.delete(0, bufferLinha.length());
 						int varOne;
 						int varTwo;
-						try {
+						if(this.arm.getInteiro(nomeVar) != null)
 							varOne = getArmazenamentoCont(nomeVar);
-						} catch(Exception erro) {
+						else
 							varOne = Integer.parseInt(nomeVar);
-						}
 
-						try {
+						if(this.arm.getInteiro(nomeVar2) != null)
 							varTwo = getArmazenamentoCont(nomeVar2);
-						} catch(Exception erro) {
-							varTwo = Integer.parseInt(nomeVar2);
+						else
+							varTwo = Integer.parseInt(nomeVar2); 
+						// Armazenar em uma string
+						File file = new File(nomeLoop);
+					
+						try {
+							PrintWriter escrever = new PrintWriter(file);
+							int chave = -1;
+							while(input.hasNext()) {
+								String lineIf = input.nextLine(); // Armazenar Linhas
+								lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+								escrever.println(lineIf);
+								char [] lif = lineIf.toCharArray(); // tranformar String em char
+								if(chave == -1)
+									chave = 0;
+								if(lif[0] == '{')
+									chave++;
+								else if(lif[0] == '}')
+									chave--;
+								if(chave == 0)
+								{
+									escrever.close();
+									break;
+								}
+							}
+						} catch (FileNotFoundException ex) {
+							System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+							break outerloop;
 						}
 						if(operador == 1) {
 							while(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
-								System.out.println("a = " + getArmazenamentoCont(nomeVar));
-								System.out.println("b = " + getArmazenamentoCont(nomeVar2));
-								if(contChaves == 0 || contChaves == -1)
-									lerArq(input);
+								try {
+									Scanner inputWhile = new Scanner(file);
+									lerArq(inputWhile);
+								} catch (FileNotFoundException ex) {
+									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+									break outerloop;
+								}
 							}
 						}
+						else if(operador == 2) {
+							while(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
+								try {
+									Scanner inputWhile = new Scanner(file);
+									lerArq(inputWhile);
+								} catch (FileNotFoundException ex) {
+									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+									break outerloop;
+								}
+							}
+						}
+						else if(operador == 3) {
+							while(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+								try {
+									Scanner inputWhile = new Scanner(file);
+									lerArq(inputWhile);
+								} catch (FileNotFoundException ex) {
+									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+									break outerloop;
+								}
+							}
+						}
+						else if(operador == 4) {
+							while(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
+								try {
+									Scanner inputWhile = new Scanner(file);
+									lerArq(inputWhile);
+								} catch (FileNotFoundException ex) {
+									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+									break outerloop;
+								}
+							}
+						}
+						if(operador == 5) {
+							while(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
+								try {
+									Scanner inputWhile = new Scanner(file);
+									lerArq(inputWhile);
+								} catch (FileNotFoundException ex) {
+									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
+									break outerloop;
+								}
+							}
+						}
+						file.delete();
 					}
 
 					else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
