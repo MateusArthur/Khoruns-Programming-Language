@@ -7,14 +7,14 @@
 - Operações que podem ser efetuadas: " + ", " - ", " / ", " * ", " % ";
 - Expressões com dois valores operando;
 - Laço;
-- Comandos de saída, mostrar algo na tela;
+- Comandos de saída;
 - Controlador de fluxo;
 - Aninhamento de comandos.
    
   
    
 ## Declaração de Variável:
-Para declaração de variável, é necessário sempre declarar antes a palavra `new` que é uma palavra derivada da Linguagem Khronus, sendo assim:  
+Para declaração de variáveis, é necessário usar a frente do nome da variavel a palavra reservada `new`, desta forma: 
 ```java
 new variavel;
 ```
@@ -30,7 +30,7 @@ ou,
 new variavel;
 variavel = 10;
 ```
-os dois jeitos são aceitos pela linguagem
+as duas formas são aceitas pela linguagem
 ## Operações Aritméticas:
 Para realização de operações aritméticas, o Khronus Language disponibiliza as seguintes operações:
 
