@@ -107,11 +107,13 @@ class Escanear {
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '>') {
+								x++;
 								operador = 4;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '<') {
+								x++;
 								operador = 5;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
@@ -124,17 +126,15 @@ class Escanear {
 						int varOne;
 						int varTwo;
 						int chave = -1;
-						try {
+						if(this.arm.getInteiro(nomeVar) != null)
 							varOne = getArmazenamentoCont(nomeVar);
-						} catch(Exception erro) {
-							varOne = Integer.parseInt(nomeVar); 
-						}
+						else
+							varOne = Integer.parseInt(nomeVar);
 
-						try {
+						if(this.arm.getInteiro(nomeVar2) != null)
 							varTwo = getArmazenamentoCont(nomeVar2);
-						} catch(Exception erro) {
+						else
 							varTwo = Integer.parseInt(nomeVar2); 
-						}
 
 						if(operador == 1) {
 							if(varOne != varTwo) {
