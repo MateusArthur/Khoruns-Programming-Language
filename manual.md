@@ -53,7 +53,7 @@ Na Khronus Language pode se utilizr o laço `while`
 //FAZER
 
 ## Comandos de saída:
-Na Khronus Language pode se utilizar do operador `print("",)` para se imprimir algo na tela, somente imprime uma variável por vez, porém, a cada `print("",)` quebra se linha automaticamente, exemplos:
+Na Khronus Language pode se utilizar do operador `print("",)` para se imprimir algo na tela, somente imprime uma variável por vez, porém, a cada `print("")` quebra se linha automaticamente, exemplos:
 ```java
 print("Valor de a: ",a);
 ```
@@ -80,4 +80,19 @@ Nesse outro caso a saída será:
 ou seja, a segunda linha do código irá quebrar linha.
 
 ## Controlador de Fluxo:
-Na Khronus Language tem o controlador de fluxo `if` e `else`
+Na Khronus Language tem o controlador de fluxo `if` e `else`, usando a sintaxe:
+```java
+if (expressão booleana) {
+    // bloco de código 1
+} else {
+    // bloco de código 2
+} 
+```
+Na expressão booleana, pode se usar somente variáveis já declaradas, não pode usar números, e também pode se usar somente um operador para cada `if(a < b);` os operadores são:
+
+| Operações          | 
+| -------------      |
+| < | MENOR          | 
+| > | MAIOR          |
+| <= | MENOR OU IGUAL|
+| >= | MAIOR OU IGUAL|
