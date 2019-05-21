@@ -243,7 +243,7 @@ class Escanear {
 								}
 							}
 						}
-						//file.delete();
+						file.delete();
 					}
 					else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
 					
@@ -299,7 +299,7 @@ class Escanear {
 									}
 								}
 							}
-								bufferLinha.delete(0, bufferLinha.length());
+							bufferLinha.delete(0, bufferLinha.length());
 					}
 					else if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
