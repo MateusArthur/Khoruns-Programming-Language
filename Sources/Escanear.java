@@ -64,7 +64,7 @@ class Escanear {
 							break outerloop;
 						}
 						int conteudo = 0;
-						try{  
+						try{
 							conteudo = Integer.parseInt(conteudoVar);
 						} catch(Exception erro) {
 							if(this.arm.getInteiro(conteudoVar) != null)
@@ -86,7 +86,7 @@ class Escanear {
 					if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
 						int operador = 0;
-						String nomeVar2 = ""; 
+						String nomeVar2 = "";
 						while(letras[x] != ')') {
 							if(letras[x] == '=' && letras[x+1] == '=') {
 								x+=2;
@@ -107,13 +107,11 @@ class Escanear {
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '>') {
-								x++;
 								operador = 4;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
 							}
 							else if(letras[x] == '<') {
-								x++;
 								operador = 5;
 								nomeVar = bufferLinha.toString();
 								bufferLinha.delete(0, bufferLinha.length());
@@ -126,15 +124,17 @@ class Escanear {
 						int varOne;
 						int varTwo;
 						int chave = -1;
-						if(this.arm.getInteiro(nomeVar) != null)
+						try {
 							varOne = getArmazenamentoCont(nomeVar);
-						else
+						} catch(Exception erro) {
 							varOne = Integer.parseInt(nomeVar);
+						}
 
-						if(this.arm.getInteiro(nomeVar2) != null)
+						try {
 							varTwo = getArmazenamentoCont(nomeVar2);
-						else
-							varTwo = Integer.parseInt(nomeVar2); 
+						} catch(Exception erro) {
+							varTwo = Integer.parseInt(nomeVar2);
+						}
 
 						if(operador == 1) {
 							if(varOne != varTwo) {
@@ -280,13 +280,13 @@ class Escanear {
 						try {
 							varOne = getArmazenamentoCont(nomeVar);
 						} catch(Exception erro) {
-							varOne = Integer.parseInt(nomeVar); 
+							varOne = Integer.parseInt(nomeVar);
 						}
 
 						try {
 							varTwo = getArmazenamentoCont(nomeVar2);
 						} catch(Exception erro) {
-							varTwo = Integer.parseInt(nomeVar2); 
+							varTwo = Integer.parseInt(nomeVar2);
 						}
 						if(operador == 1) {
 							while(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
@@ -412,7 +412,7 @@ class Escanear {
 
 							j++;
 							while(letras[j] != ';') {
-								if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*') {
+								if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*' || letras[j] == '%') {
 									confirmaExp = true;
 									conteudoVar2 = bufferLinha.toString();
 									bufferLinha.delete(0, bufferLinha.length());
@@ -445,7 +445,7 @@ class Escanear {
 								}
 								else {
 									try{
-										conteudo = Integer.parseInt(conteudoVar);					
+										conteudo = Integer.parseInt(conteudoVar);
 									} catch(Exception erro){
 										conteudo = getArmazenamentoCont(conteudoVar);
 									}
@@ -461,7 +461,7 @@ class Escanear {
 							else if(op == 4) {
 								int conteudo;
 								try{
-									conteudo = Integer.parseInt(conteudoVar);					
+									conteudo = Integer.parseInt(conteudoVar);
 								} catch(Exception erro){
 									conteudo = getArmazenamentoCont(conteudoVar);
 								}
@@ -470,7 +470,7 @@ class Escanear {
 							else if(op == 5) {
 								int conteudo;
 								try{
-									conteudo = Integer.parseInt(conteudoVar);					
+									conteudo = Integer.parseInt(conteudoVar);
 								} catch(Exception erro){
 									conteudo = getArmazenamentoCont(conteudoVar);
 								}

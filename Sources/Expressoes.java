@@ -1,6 +1,5 @@
 class Expressoes{
   public int calcula(int oa, int ob, String op){
-    //a = vetor[0].charAt(0);
     if(op.equals("+")){
       return this.soma(oa, ob);
     }
@@ -17,9 +16,12 @@ class Expressoes{
       return this.divide(oa, ob);
     }
 
+    else if(op.equals("%")){
+      return this.modulo(oa, ob);
+    }
+
     else{
       System.out.println("ERROR");
-    //  return null;
     }
 
     return 0;
@@ -44,4 +46,10 @@ class Expressoes{
   public int divide(int a, int b){
       return a / b;
   }
+
+  public int modulo(int a, int b){
+    return a % b;
+  }
+
+
 }
