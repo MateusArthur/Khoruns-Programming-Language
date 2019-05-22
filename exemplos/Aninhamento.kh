@@ -18,15 +18,15 @@ while(i < ue)
 		}
 		i++;
 	}
-	if(i == 3) 
+}
+if(i == 3) 
+{
+	if(j == 0)
 	{
-		if(j == 0)
-		{
-			print("OK!");
-		}
-		else
-		{
-			print("Erro");
-		}
+		print("OK!");
+	}
+	else
+	{
+		print("Erro");
 	}
 }
