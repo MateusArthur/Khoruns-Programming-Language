@@ -51,8 +51,13 @@ x = 1 + b;
 x = 1 + 1;
 ```
 ## Laço:
-Na Khronus Language pode se utilizr o laço `while` 
-//FAZER
+Na Khronus Language pode se utilizar do comando de repetição `while` usando a seguinte sintaxe:
+```java
+while (condições){
+   #bloco de comandos
+   }
+```
+Nas condições pode-se usar variáveis já declaradas no programa, e também números para fazer comparações.
 
 ## Comandos de saída:
 Na Khronus Language pode se utilizar do operador `print("",)` para se imprimir algo na tela e uma variável logo após a vírgula, a vírgula é obrigatoria apos as aspas para se imprimir uma varíavel e somente imprime uma variável por vez, e para se imprimir uma varável sozinha pode se usar `print()`,porém, a cada `print("")` quebra se linha automaticamente, exemplos:
@@ -93,13 +98,13 @@ Nesse caso a saída será:
 | *10* | 
 
 ## Controlador de Fluxo:
-Na Khronus Language tem o controlador de fluxo `if` e `else`, usando a sintaxe:
+Na Khronus Language tem o controlador de fluxo `if` e `else`, após as `{}` do `if` é necessário usar `;` conforme a sintaxe:
 ```java
 if (expressão booleana) {
-    // bloco de código 1
-} else {
-    // bloco de código 2
-} 
+    // bloco de comando 1
+}; else {
+    // bloco de comando 2
+}
 ```
 Na expressão booleana, pode se usar somente variáveis já declaradas, não pode usar números, e também pode se usar somente um operador para cada `if(a < b);` os operadores relacionais são:
 
@@ -110,6 +115,7 @@ Na expressão booleana, pode se usar somente variáveis já declaradas, não pod
 | <= | MENOR OU IGUAL|
 | >= | MAIOR OU IGUAL|
 | == | IGUAL         |
+| != | DIFERENTE     |
 
 ## Aninhamento de Comandos:
 Na Khronus Language pode se utilizar de `if` aninhado conforme sintaxe:
@@ -121,7 +127,7 @@ if (a == c){
    print(a);
    if (b > a){
       print(b);
-   }
-}
+   };
+};
 ```
 e assim sucessivamente até aonde necessário.
