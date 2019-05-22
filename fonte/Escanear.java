@@ -187,18 +187,20 @@ class Escanear {
 							while(input.hasNext()) {
 								String lineIf = input.nextLine();
 								lineIf = lineIf.replaceAll("\\s+", "");
-								escrever.println(lineIf);
-								char [] lif = lineIf.toCharArray();
-								if(chave == -1)
-									chave = 0;
-								if(lif[0] == '{')
-									chave++;
-								else if(lif[0] == '}')
-									chave--;
-								if(chave == 0)
-								{
-									escrever.close();
-									break;
+								if(lineIf.length() != 0) {
+									escrever.println(lineIf);
+									char [] lif = lineIf.toCharArray();
+									if(chave == -1)
+										chave = 0;
+									if(lif[0] == '{')
+										chave++;
+									else if(lif[0] == '}')
+										chave--;
+									if(chave == 0)
+									{
+										escrever.close();
+										break;
+									}
 								}
 							}
 						} catch (FileNotFoundException ex) {
@@ -206,10 +208,18 @@ class Escanear {
 							break outerloop;
 						}
 						if(operador == 1) {
-							while(getArmazenamentoCont(nomeVar) == getArmazenamentoCont(nomeVar2)) {
+							while(varOne == varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+									
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -217,10 +227,18 @@ class Escanear {
 							}
 						}
 						else if(operador == 2) {
-							while(getArmazenamentoCont(nomeVar) >= getArmazenamentoCont(nomeVar2)) {
+							while(varOne >= varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -228,10 +246,18 @@ class Escanear {
 							}
 						}
 						else if(operador == 3) {
-							while(getArmazenamentoCont(nomeVar) <= getArmazenamentoCont(nomeVar2)) {
+							while(varOne <= varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -239,10 +265,18 @@ class Escanear {
 							}
 						}
 						else if(operador == 4) {
-							while(getArmazenamentoCont(nomeVar) != getArmazenamentoCont(nomeVar2)) {
+							while(varOne != varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -250,10 +284,18 @@ class Escanear {
 							}
 						}
 						else if(operador == 5) {
-							while(getArmazenamentoCont(nomeVar) > getArmazenamentoCont(nomeVar2)) {
+							while(varOne > varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -261,10 +303,18 @@ class Escanear {
 							}
 						}
 						if(operador == 6) {
-							while(getArmazenamentoCont(nomeVar) < getArmazenamentoCont(nomeVar2)) {
+							while(varOne < varTwo) {
 								try {
+
 									Scanner inputWhile = new Scanner(file);
 									lerArq(inputWhile);
+
+									if(this.arm.getInteiro(nomeVar) != null)
+										varOne = getArmazenamentoCont(nomeVar);
+
+									if(this.arm.getInteiro(nomeVar2) != null)
+										varTwo = getArmazenamentoCont(nomeVar2);
+
 								} catch (FileNotFoundException ex) {
 									System.out.println("[Khronus]: Erro na while. [Linha " + linha + "]");
 									break outerloop;
@@ -394,127 +444,164 @@ class Escanear {
 
 						if(operador == 1) {
 							if(varOne != varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine();
-									lineIf = lineIf.replaceAll("\\s+", "");
-									char [] lif = lineIf.toCharArray();
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+								lineIf = input.nextLine();
+								lineIf = lineIf.replaceAll("\\s+", "");
+								if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}
 						else if(operador == 2) {
 							if(varOne < varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine();
+									lineIf = input.nextLine();
 									lineIf = lineIf.replaceAll("\\s+", "");
-									char [] lif = lineIf.toCharArray();
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+									if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}
 						else if(operador == 3) {
 							if(varOne == varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine();
+									
+									lineIf = input.nextLine();
 									lineIf = lineIf.replaceAll("\\s+", "");
-									char [] lif = lineIf.toCharArray();
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+									if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}
 						else if(operador == 4) {
 							if(varOne > varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine(); // Armazenar Linhas
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+									lineIf = input.nextLine();
+									lineIf = lineIf.replaceAll("\\s+", "");
+									if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}
 						else if(operador == 5) {
 							if(varOne <= varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine(); // Armazenar Linhas
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+									lineIf = input.nextLine();
+									lineIf = lineIf.replaceAll("\\s+", "");
+									if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}
 						else if(operador == 6) {
 							if(varOne >= varTwo) {
+								String lineIf = line;
 								while(input.hasNext()) {
-									String lineIf = input.nextLine(); // Armazenar Linhas
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
-									if(chave == -1)
-										chave = 0;
-									if(lif[0] == '{')
-										chave++;
-									else if(lif[0] == '}')
-										chave--;
-									if(chave == 0)
-										break;
+									lineIf = input.nextLine();
+									lineIf = lineIf.replaceAll("\\s+", "");
+									if(lineIf.length() != 0) {
+										char [] lif = lineIf.toCharArray();
+										if(chave == -1)
+											chave = 0;
+										if(lif[0] == '{')
+											chave++;
+										else if(lif[0] == '}')
+											chave--;
+										if(chave == 0)
+											break;
+									}
 								}
-								String lineIf = input.nextLine();
-								if(lineIf.equals("else")) {
-									habilitarElse = true;
+								if(lineIf.equals("};"))
+								{
+									lineIf = input.nextLine();
+									if(lineIf.equals("else")) {
+										habilitarElse = true;
+									}
 								}
 							}
 						}

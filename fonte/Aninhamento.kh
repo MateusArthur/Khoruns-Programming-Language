@@ -1,0 +1,31 @@
+new i;
+new j;
+j = 0;
+i = 0;
+
+while(i < 3) 
+{
+	if(i < 3)
+	{
+		if(i == 0)
+		{
+			print("Zero");
+		};
+		else
+		{
+			print("Outro");
+		}
+		i++;
+	}
+}
+if(i == 3) 
+{
+	if(j == 0)
+	{
+		print("OK!");
+	};
+	else
+	{
+		print("Erro");
+	}
+}
