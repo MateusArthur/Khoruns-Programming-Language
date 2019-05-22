@@ -1,4 +1,5 @@
 class Expressoes{
+  //Metodo responsavel por realizar expressoes
   public int calcula(int oa, int ob, String op){
     if(op.equals("+")){
       return this.soma(oa, ob);

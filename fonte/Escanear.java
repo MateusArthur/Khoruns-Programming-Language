@@ -6,65 +6,69 @@ class Escanear {
 	private Armazenamento arm = new Armazenamento();
 	private Atribuir atribuir = new Atribuir();
 	private Expressoes exp = new Expressoes();
+
 	//Contador de linhas
 	int linha = 0;
+
 	//Armazenar loop
 	int contarLoop = 0;
+
 	// Interpretador
 	public void lerArq(Scanner input) {
-		// Contar Chaves 
+		// Contar Chaves
 		int contChaves = 0;
 		outerloop:
 		while (input.hasNext()) {
+
 			// Variaveis
 			String nomeVar = "";
-			//System.out.println(input.nextLine());
-			String line = input.nextLine(); // Armazenar Linhas
-			char [] letras = line.toCharArray(); // tranformar String em char
+
+			// Armazena as linhas
+			String line = input.nextLine();
+
+			// tranformar String lida na linha em um vetor de char
+			char [] letras = line.toCharArray();
 			String conteudoVar = "";
 			StringBuilder bufferLinha =  new StringBuilder();
 			boolean habilitarElse = false;
-			// Fim das varaiveis
-			// Descobrir se é uma nova variavel
+
+
+			//Condicao para detectar a criacao de uma nova variavel
 			if(line.length() != 0){
-				// Verificar se tem espaco antes do new
 				int xx = 0;
 				while(1 > 0)
 				{
 					if(!palavraValida(letras[xx]+"") && letras[xx] != '{' && letras[xx] != '}'){
 						xx++;
 					}
-					else 
+					else
 						break;
 				}
 				if(letras[xx] == 'n' && letras[xx+1] == 'e' && letras[xx+2] == 'w' && letras[xx+3] == ' ') {
-					// Zerar as variaveis após a verificação do espaço
-					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
-					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
-					// pegar o ultimo char e ve se ter ;
+					line = line.replaceAll("\\s+", "");
+					letras = line.toCharArray();
 					if(line.charAt(line.length()-1) != ';') {
-						System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]"); // ajeitar
+						System.out.println("[Khronus]: Erro de Syntaxe. [Linha " + linha + "]");
 						break outerloop;
 					}
 					int j = 3;
 					while(letras[j] != ';') {
 						if(letras[j] == '=') {
-							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+							nomeVar = bufferLinha.toString();
 							if(!palavraValida(nomeVar)) {
-								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
+								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
 								return;
 							}
-							bufferLinha.delete(0, bufferLinha.length()); // apagar
+							bufferLinha.delete(0, bufferLinha.length());
 						}
-						else // para não adicionar o igual
+						else
 							bufferLinha.append(letras[j]);
-						if(j == line.length()-2 && nomeVar == "") { // case: não ter igual
-							nomeVar = bufferLinha.toString(); // achamos o nome da variavel
+						if(j == line.length()-2 && nomeVar == "") {
+							nomeVar = bufferLinha.toString();
 							if(!palavraValida(nomeVar)) {
-								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]"); // ajeitar
-								break outerloop;
+								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
 							}
-							bufferLinha.delete(0, bufferLinha.length()); // apagar
+							bufferLinha.delete(0, bufferLinha.length()); r
 						}
 						conteudoVar = bufferLinha.toString();
 						j++;
@@ -88,15 +92,17 @@ class Escanear {
 					}
 					arm.setInteiro(nomeVar, conteudo);
 				}
+
+				//Deteccao de condicionais else
 				else if(letras[xx] == 'e' && letras[xx+1] == 'l' && letras[xx+2] == 's' && letras[xx+3] == 'e')
 				{
 					if(!habilitarElse)
 					{
 						int chave = -1;
 						while(input.hasNext()) {
-							String lineIf = input.nextLine(); // Armazenar Linhas
-							lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-							char [] lif = lineIf.toCharArray(); // tranformar String em char
+							String lineIf = input.nextLine();
+							lineIf = lineIf.replaceAll("\\s+", "");
+							char [] lif = lineIf.toCharArray();
 							if(chave == -1)
 								chave = 0;
 							if(lif[0] == '{')
@@ -110,8 +116,10 @@ class Escanear {
 				}
 				else {
 					char [] armLetras = line.toCharArray();
-					line = line.replaceAll("\\s+", ""); // Remover espaços da linha
-					letras = line.toCharArray(); // Tranformar novamente agora sem espaços
+					line = line.replaceAll("\\s+", "");
+					letras = line.toCharArray();
+
+					//Deteccao do laco de repeticao WHILE
 					if(letras[0] == 'w' && letras[1] == 'h' && letras[2] == 'i' && letras[3] == 'l' && letras[4] == 'e' && letras[5] == '(') {
 						contarLoop++;
 						String nomeLoop = "while"+contarLoop+".txt";
@@ -170,18 +178,17 @@ class Escanear {
 						if(this.arm.getInteiro(nomeVar2) != null)
 							varTwo = getArmazenamentoCont(nomeVar2);
 						else
-							varTwo = Integer.parseInt(nomeVar2); 
-						// Armazenar em uma string
+							varTwo = Integer.parseInt(nomeVar2);
 						File file = new File(nomeLoop);
-					
+
 						try {
 							PrintWriter escrever = new PrintWriter(file);
 							int chave = -1;
 							while(input.hasNext()) {
-								String lineIf = input.nextLine(); // Armazenar Linhas
-								lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
+								String lineIf = input.nextLine();
+								lineIf = lineIf.replaceAll("\\s+", "");
 								escrever.println(lineIf);
-								char [] lif = lineIf.toCharArray(); // tranformar String em char
+								char [] lif = lineIf.toCharArray();
 								if(chave == -1)
 									chave = 0;
 								if(lif[0] == '{')
@@ -266,8 +273,10 @@ class Escanear {
 						}
 						file.delete();
 					}
+
+					//Deteccao do print
 					else if(letras[0] == 'p' && letras[1] == 'r' && letras[2] == 'i' && letras[3] == 'n' && letras[4] == 't' && letras[5] == '(') {
-					
+
 							bufferLinha.delete(0, bufferLinha.length());
 							Print imprimir = new Print();
 							int x = 0;
@@ -299,7 +308,7 @@ class Escanear {
 
 									String armazenaString = bufferLinha.toString();
 									bufferLinha.delete(0, bufferLinha.length());
-									j = x; // economizar loops
+									j = x;
 									while(letras[j] != ',') {
 										j++;
 										if(letras[j] == ')')
@@ -322,6 +331,8 @@ class Escanear {
 							}
 							bufferLinha.delete(0, bufferLinha.length());
 					}
+
+					//Deteccao de condicionais if
 					else if(letras[0] == 'i' && letras[1] == 'f' && letras[2] == '(') {
 						int x = 3;
 						int operador = 0;
@@ -379,14 +390,14 @@ class Escanear {
 						if(this.arm.getInteiro(nomeVar2) != null)
 							varTwo = getArmazenamentoCont(nomeVar2);
 						else
-							varTwo = Integer.parseInt(nomeVar2); 
+							varTwo = Integer.parseInt(nomeVar2);
 
 						if(operador == 1) {
 							if(varOne != varTwo) {
 								while(input.hasNext()) {
 									String lineIf = input.nextLine();
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									lineIf = lineIf.replaceAll("\\s+", "");
+									char [] lif = lineIf.toCharArray();
 									if(chave == -1)
 										chave = 0;
 									if(lif[0] == '{')
@@ -405,9 +416,9 @@ class Escanear {
 						else if(operador == 2) {
 							if(varOne < varTwo) {
 								while(input.hasNext()) {
-									String lineIf = input.nextLine(); // Armazenar Linhas
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									String lineIf = input.nextLine();
+									lineIf = lineIf.replaceAll("\\s+", "");
+									char [] lif = lineIf.toCharArray();
 									if(chave == -1)
 										chave = 0;
 									if(lif[0] == '{')
@@ -426,9 +437,9 @@ class Escanear {
 						else if(operador == 3) {
 							if(varOne == varTwo) {
 								while(input.hasNext()) {
-									String lineIf = input.nextLine(); // Armazenar Linhas
-									lineIf = lineIf.replaceAll("\\s+", ""); // Remover espaços da linha
-									char [] lif = lineIf.toCharArray(); // tranformar String em char
+									String lineIf = input.nextLine();
+									lineIf = lineIf.replaceAll("\\s+", "");
+									char [] lif = lineIf.toCharArray(); 
 									if(chave == -1)
 										chave = 0;
 									if(lif[0] == '{')
@@ -508,9 +519,10 @@ class Escanear {
 							}
 						}
 					}
+
+					//Deteccao de operacoes de atribuicao
 					else {
 						Inteiro pegarInteiro = new Inteiro();
-						//Atribuicao de valores
 						int j = 0;
 						int op = 0;
 						if(letras[j] == '{') {
@@ -520,13 +532,10 @@ class Escanear {
 							contChaves--;
 							if(contChaves == 0) {
 								contChaves = -1;
-								//Limpar memoria
 							}
 						}
-						else { 
-							// Atribuicao de valores sem e com expressoes aritmeticas, Ex: a++; a--; a+=x; a-=x; a=x; a=a*a; a=a/a; etc...
+						else {
 							bufferLinha.delete(0, bufferLinha.length());
-							// Esse while verifica qual atribuicao sera feita
 							while(1 > 0){
 								if(letras[j] == '=') {
 									op = 1;
@@ -563,14 +572,13 @@ class Escanear {
 
 							String conteudoVar2 = "";
 							String operador = "";
-							// Para verificar se está sendo atribuido uma expressao aritmetica
+
 							boolean confirmaExp = false;
 
 							j++;
 
-							// While para armazenar valor que sera atribuido a variavel nomeVar
+
 							while(letras[j] != ';') {
-								// verificar se e uma expressao
 								if(letras[j] == '+' || letras[j] == '-' || letras[j] == '/' || letras[j] == '*' || letras[j] == '%') {
 									confirmaExp = true;
 									conteudoVar2 = bufferLinha.toString();
@@ -582,13 +590,10 @@ class Escanear {
 								j++;
 							}
 							conteudoVar = bufferLinha.toString();
-							// realiza as atribuicoes
 							if(op == 1) {
 								int conteudo = 0, oa = 0, ob = 0;
-								// encontrou uma expressao aritmetica
 								if(confirmaExp){
 									try{
-										//System.out.println(conteudoVar2);
 										oa = Integer.parseInt(conteudoVar2);
 									}catch(Exception erro){
 										oa = this.arm.getInteiro(conteudoVar2).getConteudo();
@@ -668,14 +673,14 @@ class Escanear {
 		return 0;
 	}
 
-	public static boolean palavraValida(String pal) 
+	public static boolean palavraValida(String pal)
 	{
 		int i = 0;
 		while(i < pal.length())
 		{
 			char x = pal.charAt(i);
-			if(x != 'a' && x != 'b' && x != 'c' && x != 'd' && x != 'e' && x != 'f' && x != 'g' && x != 'h' && x != 'i' && x != 'j' && x != 'k' && x != 'l' && x != 'm' && x != 'n' && x != 'o' && x != 'r' && x != 'p' && x != 'q' && x != 't' && x != 'u' && x != 'v' && x != 'w' && x != 'x' && x != 'y' && x != 'z' && x != '_') 
-			{	
+			if(x != 'a' && x != 'b' && x != 'c' && x != 'd' && x != 'e' && x != 'f' && x != 'g' && x != 'h' && x != 'i' && x != 'j' && x != 'k' && x != 'l' && x != 'm' && x != 'n' && x != 'o' && x != 'r' && x != 'p' && x != 'q' && x != 't' && x != 'u' && x != 'v' && x != 'w' && x != 'x' && x != 'y' && x != 'z' && x != '_')
+			{
 				return false;
 			}
 			i++;
