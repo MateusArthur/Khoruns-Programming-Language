@@ -1,3 +1,7 @@
 fonte/*.class
 fonte/Manifesto.txt
+<<<<<<< HEAD
 fonte/teste.kh
+=======
+fonte/teste.kh
+>>>>>>> f00e358c358cf85c7400513eb82bbebe36e11d81
