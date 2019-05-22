@@ -68,7 +68,7 @@ class Escanear {
 							if(!palavraValida(nomeVar)) {
 								System.out.println("[Khronus]: Erro atribuição de nome da variavel inválido. [Linha " + linha + "]");
 							}
-							bufferLinha.delete(0, bufferLinha.length()); r
+							bufferLinha.delete(0, bufferLinha.length()); 
 						}
 						conteudoVar = bufferLinha.toString();
 						j++;
@@ -439,7 +439,7 @@ class Escanear {
 								while(input.hasNext()) {
 									String lineIf = input.nextLine();
 									lineIf = lineIf.replaceAll("\\s+", "");
-									char [] lif = lineIf.toCharArray(); 
+									char [] lif = lineIf.toCharArray();
 									if(chave == -1)
 										chave = 0;
 									if(lif[0] == '{')
