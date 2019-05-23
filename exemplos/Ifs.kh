@@ -1,7 +1,10 @@
 new a;
 a = 1;
-if (a > 1){
+if (a > 1)
+{
   print("Maior");
-}else{
+};
+else
+{
   print("Menor");
 }
