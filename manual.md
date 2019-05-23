@@ -100,7 +100,8 @@ Nesse caso a saída será:
 ## Controlador de Fluxo:
 Na Khronus Language tem o controlador de fluxo `if` e `else`, após as `{}` do `if` é necessário usar `;` e é necessário quebrar linha após o uso do `;` conforme a sintaxe:
 ```java
-if (condições) {
+if (condições) 
+{
     // bloco de comando 1
 }; 
 else {
