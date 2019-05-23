@@ -53,9 +53,10 @@ x = 1 + 1;
 ## Laço:
 Na Khronus Language pode se utilizar do comando de repetição `while` usando a seguinte sintaxe:
 ```java
-while (condições){
+while (condições)
+{
    #bloco de comandos
-   }
+}
 ```
 Nas condições pode-se usar variáveis já declaradas no programa, e também números para fazer comparações.
 
@@ -104,7 +105,8 @@ if (condições)
 {
     // bloco de comando 1
 }; 
-else {
+else 
+{
     // bloco de comando 2
 }
 ```
@@ -125,11 +127,13 @@ Na Khronus Language pode se utilizar de `if` aninhado conforme sintaxe:
 new a = 10;
 new b = 30;
 new c = 10;
-if (a == c){
+if (a == c)
+{
    print(a);
-   if (b > a){
+   if (b > a)
+   {
       print(b);
-   };
-};
+   }
+}
 ```
 e assim sucessivamente até aonde necessário.
