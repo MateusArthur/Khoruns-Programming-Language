@@ -98,11 +98,12 @@ Nesse caso a saída será:
 | *10* | 
 
 ## Controlador de Fluxo:
-Na Khronus Language tem o controlador de fluxo `if` e `else`, após as `{}` do `if` é necessário usar `;` conforme a sintaxe:
+Na Khronus Language tem o controlador de fluxo `if` e `else`, após as `{}` do `if` é necessário usar `;` e é necessário quebrar linha após o uso do `;` conforme a sintaxe:
 ```java
 if (expressão booleana) {
     // bloco de comando 1
-}; else {
+}; 
+else {
     // bloco de comando 2
 }
 ```
